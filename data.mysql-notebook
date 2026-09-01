@@ -1,0 +1,255 @@
+{
+    "type": "MySQLNotebook",
+    "version": "1.0",
+    "caption": "DB Notebook",
+    "content": "\\about\nCREATE DATABASE employer_database;\nUSE employer_database;\nCREATE DATABASE test;\nUSE employer_database;\nuse employer_database;\nCREATE TABLE employees (\n    employee_id       INT PRIMARY KEY,\n    employee_name     VARCHAR(100),\n    gender            VARCHAR(10),\n    department        VARCHAR(50),\n    salary            INT,\n    manager_id        INT,\n    hire_date         DATE,\n    city              VARCHAR(50),\n    state             VARCHAR(50),\n    email             VARCHAR(100),\n    employment_status VARCHAR(20),\n    FOREIGN KEY (manager_id) REFERENCES employees(employee_id)\n);\n\nINSERT INTO employees (employee_id, employee_name, gender, department, salary, manager_id, hire_date, city, state, email, employment_status) VALUES\n(1, 'Raj Sharma',   'Male',   'IT',        120000, NULL, '2012-03-01', 'Mumbai',    'Maharashtra', 'raj.sharma@company.com',   'Active'),\n(2, 'Ankit Verma',  'Male',   'HR',         90000, NULL, '2015-06-15', 'Delhi',     'Delhi',       'ankit.verma@company.com',  'Active'),\n(3, 'Priya Singh',  'Female', 'Finance',   100000, NULL, '2010-09-20', 'Pune',      'Maharashtra', 'priya.singh@company.com',  'Active'),\n(4, 'Amit Patel',   'Male',   'Sales',      85000, NULL, '2017-01-10', 'Bangalore', 'Karnataka',   'amit.patel@company.com',   'Active'),\n(5, 'Neha Joshi',   'Female', 'Marketing',  88000, NULL, '2014-04-05', 'Hyderabad', 'Telangana',   'neha.joshi@company.com',   'Active'),\n(6, 'Rohit Mehta',  'Male',   'Support',    75000, NULL, '2018-07-22', 'Chennai',   'Tamil Nadu',  'rohit.mehta@company.com',  'Active'),\n(7, 'Sneha Kapoor', 'Female', 'IT',        115000, NULL, '2011-11-30', 'Mumbai',    'Maharashtra', 'sneha.kapoor@company.com', 'Active'),\n(8, 'Kunal Shah',   'Male',   'Finance',   105000, NULL, '2013-02-14', 'Ahmedabad', 'Gujarat',     'kunal.shah@company.com',   'Active'),\n(9,  'Aarav Sharma',  'Male',   'IT',        75000,  1, '2021-01-15', 'Mumbai',    'Maharashtra', 'aarav@gmail.com',    'Active'),\n(10, 'Priya Mehta',   'Female', 'HR',        55000,  2, '2020-03-10', 'Delhi',     'Delhi',       'priya@gmail.com',    'Active'),\n(11, 'Rohit Jain',    'Male',   'Finance',   68000,  3, '2019-07-23', 'Pune',      'Maharashtra', 'rohit@gmail.com',    'Active'),\n(12, 'Sneha Patil',   'Female', 'IT',        80000,  1, '2022-02-12', 'Mumbai',    'Maharashtra', 'sneha@gmail.com',    'Active'),\n(13, 'Vikas Singh',   'Male',   'Sales',     45000,  4, '2021-11-05', 'Bangalore', 'Karnataka',   'vikas@gmail.com',    'Active'),\n(14, 'Anjali Verma',  'Female', 'Marketing', 60000,  5, '2020-09-17', 'Hyderabad', 'Telangana',   'anjali@gmail.com',   'Active'),\n(15, 'Karan Shah',    'Male',   'IT',        95000,  1, '2018-04-19', 'Mumbai',    'Maharashtra', 'karan@gmail.com',    'Active'),\n(16, 'Meera Joshi',   'Female', 'HR',        53000,  2, '2021-06-14', 'Pune',      'Maharashtra', 'meera@gmail.com',    'Active'),\n(17, 'Pooja Nair',    'Female', 'Finance',   72000,  3, '2019-12-01', 'Chennai',   'Tamil Nadu',  'pooja@gmail.com',    'Active'),\n(18, 'Low Salary',    'Male',   'Support',   25000,  6, '2023-01-01', 'Pune',      'Maharashtra', 'low@gmail.com',      'Active'),\n(19, 'Arjun Gupta',   'Male',   'IT',        78000,  1, '2020-08-11', 'Mumbai',    'Maharashtra', 'arjun@gmail.com',    'Active'),\n(20, 'Rahul Kapoor',  'Male',   'Sales',     47000,  4, '2023-01-08', 'Delhi',     'Delhi',       'rahul@gmail.com',    'Active'),\n(21, 'Simran Kaur',   'Female', 'Marketing', 62000,  5, '2022-10-09', 'Chandigarh','Punjab',      'simran@gmail.com',   'Active'),\n(22, 'Aman Mishra',   'Male',   'HR',        54000,  2, '2021-04-30', 'Lucknow',   'UP',          'aman@gmail.com',     'Active'),\n(23, 'Dev Malhotra',  'Male',   'Finance',   67000,  3, '2017-03-15', 'Delhi',     'Delhi',       'dev@gmail.com',      'Active'),\n(24, 'Nisha Rao',     'Female', 'IT',        83000,  1, '2021-05-25', 'Bangalore', 'Karnataka',   'nisha@gmail.com',    'Active'),\n(25, 'Ravi Kumar',    'Male',   'Support',   30000,  6, '2022-05-15', 'Chennai',   'Tamil Nadu',  'ravi@gmail.com',     'Active'),\n(26, 'Yash Thakur',   'Male',   'Sales',     50000,  4, '2022-01-20', 'Mumbai',    'Maharashtra', 'yash@gmail.com',     'Active'),\n(27, 'Ritika Sen',    'Female', 'Marketing', 59000,  5, '2019-11-13', 'Kolkata',   'West Bengal', 'ritika@gmail.com',   'Active'),\n(28, 'Tanvi Desai',   'Female', 'HR',        52000,  2, '2019-09-27', 'Ahmedabad', 'Gujarat',     'tanvi@gmail.com',    'On Leave'),\n(29, 'Mohit Arora',   'Male',   'IT',        91000,  7, '2018-07-07', 'Delhi',     'Delhi',       'mohit@gmail.com',    'Active'),\n(30, 'Kriti Sharma',  'Female', 'Finance',   71000,  3, '2020-12-21', 'Pune',      'Maharashtra', 'kriti@gmail.com',    'Active'),\n(31, 'Neha Iyer',     'Female', 'Sales',     49000,  4, '2023-03-18', 'Chennai',   'Tamil Nadu',  'nehaiyer@gmail.com', 'Active'),\n(32, 'Varun Sethi',   'Male',   'Marketing', 61000,  5, '2020-01-05', 'Delhi',     'Delhi',       'varun@gmail.com',    'Active'),\n(33, 'Harsh Pandey',  'Male',   'IT',        76000,  7, '2022-06-11', 'Mumbai',    'Maharashtra', 'harsh@gmail.com',    'On Leave'),\n(34, 'Divya Pillai',  'Female', 'Support',   32000,  6, '2021-09-10', 'Hyderabad', 'Telangana',   'divya@gmail.com',    'On Leave'),\n(35, 'Isha Kulkarni', 'Female', 'Finance',   69000,  3, '2021-08-14', 'Pune',      'Maharashtra', 'isha@gmail.com',     'Active'),\n(36, 'Sonal Jain',    'Female', 'HR',        51000,  2, '2023-04-04', 'Jaipur',    'Rajasthan',   'sonal@gmail.com',    'Active'),\n(37, 'Aisha Khan',    'Female', 'Sales',     46000,  4, '2022-02-28', 'Hyderabad', 'Telangana',   'aisha@gmail.com',    'Inactive'),\n(38, 'Siddharth Roy', 'Male',   'IT',        87000,  1, '2018-05-17', 'Kolkata',   'West Bengal', 'sid@gmail.com',      'Active'),\n(39, 'Preeti Das',    'Female', 'Marketing', 64000,  5, '2020-10-10', 'Kolkata',   'West Bengal', 'preeti@gmail.com',   'Terminated'),\n(40, 'Rajat Saxena',  'Male',   'Finance',   73000,  3, '2019-06-06', 'Delhi',     'Delhi',       'rajat@gmail.com',    'Terminated'),\n(41, 'Akash Yadav',   'Male',   'IT',        88000,  7, '2017-08-22', 'Lucknow',   'UP',          'akash@gmail.com',    'Active'),\n(42, 'No Manager',    'Male',   'Finance',   65000, NULL, '2020-02-20', 'Nagpur',  'Maharashtra', 'nomgr@gmail.com',    'Active'),\n(43, 'Same Salary A', 'Female', 'IT',        70000,  1, '2021-03-03', 'Mumbai',    'Maharashtra', 'same1@gmail.com',    'Active'),\n(44, 'Same Salary B', 'Male',   'IT',        70000,  1, '2021-03-04', 'Mumbai',    'Maharashtra', 'same2@gmail.com',    'Active'),\n(45, 'High Salary',   'Female', 'IT',       150000,  1, '2016-05-15', 'Mumbai',    'Maharashtra', 'high@gmail.com',     'Active'),\n(46, 'Test User',     'Female', 'IT',          NULL,  1, '2022-09-01', 'Mumbai',   'Maharashtra', 'test@gmail.com',     'Inactive'),\n(47, 'NULL Employee', 'Male',    NULL,       40000, NULL, '2023-02-10', 'Indore',  NULL,          NULL,                 'Inactive'),\n(48, 'Aarav Sharma',  'Male',   'IT',        75000,  1, '2021-01-15', 'Mumbai',    'Maharashtra', 'aarav@gmail.com',    'Active'),\n(49, 'Rohit Jain',    'Male',   'Finance',   68000,  3, '2019-07-23', 'Pune',      'Maharashtra', 'rohit@gmail.com',    'Active'),\n(50, 'Priya Mehta',   'Female', 'HR',        55000,  2, '2020-03-10', 'Delhi',     'Delhi',       'priya@gmail.com',    'Active'),\n(51, 'Vikas Singh',   'Male',   'Sales',     45000,  4, '2021-11-05', 'Bangalore', 'Karnataka',   'vikas@gmail.com',    'Active'),\n(52, 'Anjali Verma',  'Female', 'Marketing', 60000,  5, '2020-09-17', 'Hyderabad', 'Telangana',   'anjali@gmail.com',   'Active');\n",
+    "options": {
+        "tabSize": 4,
+        "indentSize": 4,
+        "insertSpaces": true,
+        "defaultEOL": "LF",
+        "trimAutoWhitespace": true
+    },
+    "viewState": {
+        "cursorState": [
+            {
+                "inSelectionMode": false,
+                "selectionStart": {
+                    "lineNumber": 12,
+                    "column": 27
+                },
+                "position": {
+                    "lineNumber": 12,
+                    "column": 27
+                }
+            }
+        ],
+        "viewState": {
+            "scrollLeft": 0,
+            "firstPosition": {
+                "lineNumber": 3,
+                "column": 1
+            },
+            "firstPositionDeltaTop": -1
+        },
+        "contributionsState": {
+            "editor.contrib.folding": {},
+            "editor.contrib.wordHighlighter": false
+        }
+    },
+    "contexts": [
+        {
+            "state": {
+                "start": 1,
+                "end": 1,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 2,
+                            "content": "Welcome to the MySQL Shell - DB Notebook.\n\nPress Ctrl+Enter to execute the code block.\n\nExecute \\sql to switch to SQL, \\js to JavaScript and \\ts to TypeScript mode.\nExecute \\help or \\? for help;",
+                            "language": "ansi"
+                        }
+                    ]
+                },
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 6
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 2,
+                "end": 3,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 0,
+                            "index": 0,
+                            "content": "MySQL Error (1007): Can't create database 'employer_database'; database exists",
+                            "language": "ansi"
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": ""
+                    }
+                },
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 34
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 34,
+                            "length": 23
+                        },
+                        "contentStart": 35,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 57,
+                            "length": 0
+                        },
+                        "contentStart": 56,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 4,
+                "end": 5,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 2,
+                            "index": 0,
+                            "resultId": "9930f7f3-bee1-45aa-acbb-396fec0f90d6",
+                            "content": "OK, 1 row affected in 8.31ms"
+                        },
+                        {
+                            "type": 2,
+                            "index": 1,
+                            "resultId": "29ef535b-8e93-41d8-e0c1-94ffd1a7c870",
+                            "content": "OK, 0 records retrieved in 0.344ms"
+                        }
+                    ]
+                },
+                "currentHeight": 45,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 21
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 21,
+                            "length": 23
+                        },
+                        "contentStart": 22,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 6,
+                "end": 74,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 2,
+                            "index": 0,
+                            "resultId": "7fa8d63c-49b3-4dc1-92be-5f4d3abdc9db",
+                            "content": "OK, 0 records retrieved in 0.348ms"
+                        },
+                        {
+                            "type": 2,
+                            "index": 1,
+                            "resultId": "7242bcc7-5439-4d43-ff15-c52551f77992",
+                            "content": "OK, 0 records retrieved in 30.441ms"
+                        },
+                        {
+                            "type": 2,
+                            "index": 2,
+                            "resultId": "6303aeba-ac4c-4e3e-cc83-a223ea3d72a5",
+                            "content": "OK, 52 rows affected in 5.316ms"
+                        }
+                    ]
+                },
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 22
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 22,
+                            "length": 459
+                        },
+                        "contentStart": 23,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 481,
+                            "length": 7037
+                        },
+                        "contentStart": 483,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 75,
+                "end": 75,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        }
+    ]
+}
