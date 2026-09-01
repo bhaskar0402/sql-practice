@@ -1,0 +1,501 @@
+{
+    "type": "MySQLNotebook",
+    "version": "1.0",
+    "caption": "DB Notebook",
+    "content": "\\about\nuse employer_database;\nCREATE TABLE bonuses (\n    bonus_id     INT PRIMARY KEY AUTO_INCREMENT,\n    employee_id  INT,\n    bonus_amount INT,\n    bonus_date   DATE,\n    bonus_type   VARCHAR(30)\n);\n\nINSERT INTO bonuses (bonus_id, employee_id, bonus_amount, bonus_date, bonus_type) VALUES\n(1,  9,  10000, '2024-01-10', 'Performance'),\n(2,  22,  5000, '2024-01-15', 'Performance'),\n(3,  27,  7000, '2024-02-01', 'Performance'),\n(4,  10, 12000, '2024-02-05', 'Performance'),\n(5,  34,  3000, '2024-02-10', 'Diwali'),\n(6,  11, 15000, '2024-03-01', 'Performance'),\n(7,  28,  8000, '2024-03-05', 'Performance'),\n(8,  23,  4000, '2024-03-15', 'Diwali'),\n(9,  12,  9000, '2024-04-01', 'Performance'),\n(10, 13, 11000, '2024-04-10', 'Performance'),\n(11, 14, 14000, '2024-04-20', 'Performance'),\n(12, 30,  7500, '2024-05-01', 'Joining'),\n(13, 15,  9500, '2024-05-10', 'Performance'),\n(14, 16, 16000, '2024-05-20', 'Performance'),\n(15, 17, 17000, '2024-06-01', 'Performance'),\n(16, 20, 20000, '2024-06-15', 'Performance'),\n(17, 39,  6000, '2024-07-01', 'Referral'),\n(18, 36,  5500, '2024-07-10', 'Diwali'),\n(19, 9,  10000, '2024-01-10', 'Performance'),\n(20, 11, 15000, '2024-03-01', 'Performance'),\n(21, 17, 17000, '2024-06-01', 'Performance'),\n(22, 20, 20000, '2024-06-15', 'Performance');\nCREATE TABLE attendance (\n    attendance_id   INT PRIMARY KEY AUTO_INCREMENT,\n    employee_id     INT,\n    attendance_date DATE,\n    status          VARCHAR(20)\n);\n\nINSERT INTO attendance (attendance_id, employee_id, attendance_date, status) VALUES\n(1,  9,  '2025-01-01', 'Present'),\n(2,  10, '2025-01-01', 'Absent'),\n(3,  11, '2025-01-01', 'Present'),\n(4,  12, '2025-01-01', 'WFH'),\n(5,  13, '2025-01-01', 'Present'),\n(6,  14, '2025-01-01', 'Present'),\n(7,  15, '2025-01-01', 'Absent'),\n(8,  16, '2025-01-01', 'Present'),\n(9,  17, '2025-01-01', 'WFH'),\n(10, 18, '2025-01-01', 'Present'),\n(11, 19, '2025-01-02', 'Present'),\n(12, 20, '2025-01-02', 'Absent'),\n(13, 21, '2025-01-02', 'Present'),\n(14, 22, '2025-01-02', 'Present'),\n(15, 23, '2025-01-02', 'WFH'),\n(16, 24, '2025-01-02', 'Present'),\n(17, 25, '2025-01-02', 'Present'),\n(18, 26, '2025-01-02', 'Absent'),\n(19, 27, '2025-01-02', 'Half Day'),\n(20, 28, '2025-01-02', 'Present'),\n(21, 9,  '2025-01-03', 'WFH'),\n(22, 10, '2025-01-03', 'Present'),\n(23, 11, '2025-01-03', 'Absent'),\n(24, 12, '2025-01-03', 'Present'),\n(25, 13, '2025-01-03', 'Present'),\n(26, 22, '2025-01-03', 'Present'),\n(27, 27, '2025-01-03', 'Present'),\n(28, 34, '2025-01-03', 'Absent'),\n(29, 39, '2025-01-03', 'WFH'),\n(30, 44, '2025-01-03', 'Half Day'),\n(31, 9,  '2025-01-01', 'Present'),\n(32, 15, '2025-01-01', 'Absent'),\n(33, 22, '2025-01-02', 'Present'),\n(34, 27, '2025-01-02', 'Half Day'),\n(35, 11, '2025-01-03', 'Absent');\nCREATE TABLE projects (\n    project_id     INT PRIMARY KEY AUTO_INCREMENT,\n    project_name   VARCHAR(100),\n    project_budget INT,\n    client_id      INT,\n    start_date     DATE,\n    status         VARCHAR(20)\n);\n\nINSERT INTO projects (project_id, project_name, project_budget, client_id, start_date, status) VALUES\n(1, 'CRM System',           500000, 1, '2025-01-01', 'Ongoing'),\n(2, 'Banking App',          800000, 2, '2024-06-01', 'Ongoing'),\n(3, 'Ecommerce Platform',   650000, 3, '2024-09-01', 'Completed'),\n(4, 'Analytics Dashboard',  300000, 4, '2025-02-01', 'On Hold'),\n(5, 'HR Management System', 250000, 5, '2025-03-01', 'Ongoing');\nCREATE TABLE employee_projects (\n    ep_id         INT PRIMARY KEY AUTO_INCREMENT,\n    employee_id   INT,\n    project_id    INT,\n    assigned_date DATE,\n    role          VARCHAR(50)\n);\n\nINSERT INTO employee_projects (ep_id, employee_id, project_id, assigned_date, role) VALUES\n(1,  9,  1, '2025-01-01', 'Lead'),\n(2,  9,  2, '2025-01-10', 'Developer'),\n(3,  22, 5, '2025-01-11', 'Analyst'),\n(4,  27, 2, '2025-01-15', 'Developer'),\n(5,  10, 1, '2025-01-20', 'Tester'),\n(6,  34, 3, '2025-01-22', 'Lead'),\n(7,  39, 4, '2025-01-25', 'Analyst'),\n(8,  11, 1, '2025-01-28', 'Developer'),\n(9,  28, 2, '2025-02-01', 'Tester'),\n(10, 35, 3, '2025-02-05', 'Developer'),\n(11, 23, 5, '2025-02-10', 'Analyst'),\n(12, 12, 1, '2025-02-12', 'Developer'),\n(13, 40, 4, '2025-02-15', 'Tester'),\n(14, 27, 2, '2025-02-18', 'Developer'),\n(15, 13, 1, '2025-02-20', 'Lead'),\n(16, 16, 2, '2025-02-25', 'Developer'),\n(17, 17, 1, '2025-03-01', 'Tester'),\n(18, 9,  1, '2025-01-01', 'Lead'),\n(19, 34, 3, '2025-01-22', 'Lead');\nCREATE TABLE salary_history (\n    history_id     INT PRIMARY KEY AUTO_INCREMENT,\n    employee_id    INT,\n    old_salary     INT,\n    new_salary     INT,\n    increment_date DATE,\n    increment_pct  DECIMAL(5,2)\n);\n\nINSERT INTO salary_history (history_id, employee_id, old_salary, new_salary, increment_date, increment_pct) VALUES\n(1,  9,  65000, 75000, '2024-01-01', 15.38),\n(2,  10, 48000, 55000, '2024-02-01', 14.58),\n(3,  11, 60000, 68000, '2024-01-01', 13.33),\n(4,  12, 72000, 80000, '2024-02-01', 11.11),\n(5,  13, 40000, 45000, '2024-03-01', 12.50),\n(6,  14, 53000, 60000, '2024-03-01', 13.21),\n(7,  15, 85000, 95000, '2024-04-01', 11.76),\n(8,  16, 47000, 53000, '2024-04-01', 12.77),\n(9,  17, 65000, 72000, '2024-05-01', 10.77),\n(10, 20, 42000, 47000, '2024-03-01', 11.90),\n(11, 22, 48000, 54000, '2024-01-01', 12.50),\n(12, 23, 60000, 67000, '2024-02-01', 11.67),\n(13, 27, 52000, 59000, '2024-04-01', 13.46),\n(14, 28, 46000, 52000, '2024-03-01', 13.04),\n(15, 34, 28000, 32000, '2024-05-01', 14.29),\n(16, 39, 58000, 64000, '2024-02-01', 10.34);\nCREATE TABLE leaves_data (\n    leave_id    INT PRIMARY KEY AUTO_INCREMENT,\n    employee_id INT,\n    leave_type  VARCHAR(50),\n    days        INT,\n    leave_date  DATE\n);\n\nINSERT INTO leaves_data (leave_id, employee_id, leave_type, days, leave_date) VALUES\n(1,  9,  'Sick Leave',   2, '2025-01-10'),\n(2,  22, 'Casual Leave', 1, '2025-01-12'),\n(3,  27, 'Paid Leave',   5, '2025-01-15'),\n(4,  10, 'Sick Leave',   3, '2025-01-20'),\n(5,  34, 'Casual Leave', 2, '2025-01-22'),\n(6,  39, 'Paid Leave',   4, '2025-01-25'),\n(7,  11, 'Sick Leave',   1, '2025-02-01'),\n(8,  28, 'Paid Leave',   6, '2025-02-05'),\n(9,  35, 'Casual Leave', 2, '2025-02-10'),\n(10, 23, 'Sick Leave',   3, '2025-02-12'),\n(11, 12, 'Paid Leave',   2, '2025-02-15'),\n(12, 13, 'Casual Leave', 1, '2025-02-18'),\n(13, 14, 'Sick Leave',   4, '2025-03-01'),\n(14, 16, 'Paid Leave',   3, '2025-03-05'),\n(15, 17, 'Casual Leave', 2, '2025-03-10');\nCREATE TABLE clients (\n    client_id     INT PRIMARY KEY AUTO_INCREMENT,\n    client_name   VARCHAR(100),\n    country       VARCHAR(50),\n    industry      VARCHAR(50),\n    contact_email VARCHAR(100)\n);\n\nINSERT INTO clients (client_id, client_name, country, industry, contact_email) VALUES\n(1, 'Infosys', 'India', 'IT',        'contact@infosys.com'),\n(2, 'HDFC',    'India', 'Banking',   'contact@hdfc.com'),\n(3, 'Amazon',  'USA',   'Ecommerce', 'contact@amazon.com'),\n(4, 'TCS',     'India', 'IT',        'contact@tcs.com'),\n(5, 'Wipro',   'India', 'IT',        'contact@wipro.com');\nCREATE TABLE orders_data (\n    order_id     INT PRIMARY KEY AUTO_INCREMENT,\n    employee_id  INT,\n    client_id    INT,\n    order_amount INT,\n    order_date   DATE,\n    order_status VARCHAR(20)\n);\n\nINSERT INTO orders_data (order_id, employee_id, client_id, order_amount, order_date, order_status) VALUES\n(1,  13, 1, 50000, '2025-01-05', 'Completed'),\n(2,  20, 2, 65000, '2025-01-08', 'Completed'),\n(3,  26, 3, 70000, '2025-01-12', 'Completed'),\n(4,  31, 4, 45000, '2025-01-15', 'Pending'),\n(5,  37, 5, 30000, '2025-01-20', 'Completed'),\n(6,  13, 2, 55000, '2025-01-25', 'Cancelled'),\n(7,  13, 3, 80000, '2025-02-03', 'Completed'),\n(8,  20, 1, 72000, '2025-02-07', 'Completed'),\n(9,  26, 5, 39000, '2025-02-12', 'Completed'),\n(10, 31, 2, 47000, '2025-02-18', 'Pending'),\n(11, 37, 4, 60000, '2025-02-24', 'Completed'),\n(12, 13, 1, 75000, '2025-03-04', 'Completed'),\n(13, 20, 3, 82000, '2025-03-09', 'Completed'),\n(14, 26, 4, 41000, '2025-03-14', 'Completed'),\n(15, 31, 5, 35000, '2025-03-19', 'Completed'),\n(16, 37, 3, 68000, '2025-03-23', 'Pending'),\n(17, 13, 4, 90000, '2025-03-28', 'Completed'),\n(18, 20, 2, 55000, '2025-03-31', 'Completed');\n",
+    "options": {
+        "tabSize": 4,
+        "insertSpaces": true,
+        "indentSize": 4,
+        "defaultEOL": "CRLF",
+        "trimAutoWhitespace": true
+    },
+    "viewState": {
+        "cursorState": [
+            {
+                "inSelectionMode": false,
+                "selectionStart": {
+                    "lineNumber": 5,
+                    "column": 22
+                },
+                "position": {
+                    "lineNumber": 5,
+                    "column": 22
+                }
+            }
+        ],
+        "viewState": {
+            "scrollLeft": 0,
+            "firstPosition": {
+                "lineNumber": 1,
+                "column": 1
+            },
+            "firstPositionDeltaTop": 0
+        },
+        "contributionsState": {
+            "editor.contrib.folding": {},
+            "editor.contrib.wordHighlighter": false
+        }
+    },
+    "contexts": [
+        {
+            "state": {
+                "start": 1,
+                "end": 1,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 2,
+                            "content": "Welcome to the MySQL Shell - DB Notebook.\n\nPress Ctrl+Enter to execute the code block.\n\nExecute \\sql to switch to SQL, \\js to JavaScript and \\ts to TypeScript mode.\nExecute \\help or \\? for help;",
+                            "language": "ansi"
+                        }
+                    ]
+                },
+                "currentHeight": 119,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 6
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 2,
+                "end": 2,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 2,
+                            "index": 0,
+                            "resultId": "b198301a-b5c0-48b0-e07c-313602475104",
+                            "content": "OK, 0 records retrieved in 0.356ms"
+                        }
+                    ]
+                },
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 22
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 3,
+                "end": 33,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 2,
+                            "index": 0,
+                            "resultId": "3ab1ea9d-14a4-412c-f94a-aa96f935442e",
+                            "content": "OK, 0 records retrieved in 18.839ms"
+                        },
+                        {
+                            "type": 2,
+                            "index": 1,
+                            "resultId": "9127aab9-5317-4ac5-9b68-7833ed6d955b",
+                            "content": "OK, 22 rows affected in 3.006ms"
+                        }
+                    ]
+                },
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 170
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 170,
+                            "length": 1080
+                        },
+                        "contentStart": 172,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 34,
+                "end": 76,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 2,
+                            "index": 0,
+                            "resultId": "740858f3-31e3-4020-ff50-76303be30694",
+                            "content": "OK, 0 records retrieved in 26.429ms"
+                        },
+                        {
+                            "type": 2,
+                            "index": 1,
+                            "resultId": "ee097305-18f9-46a1-ba81-d8930d875ade",
+                            "content": "OK, 35 rows affected in 2.085ms"
+                        }
+                    ]
+                },
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 163
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 163,
+                            "length": 1285
+                        },
+                        "contentStart": 165,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 77,
+                "end": 91,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 2,
+                            "index": 0,
+                            "resultId": "dbf433d6-65be-4263-9293-a5950e4f91e3",
+                            "content": "OK, 0 records retrieved in 26.263ms"
+                        },
+                        {
+                            "type": 2,
+                            "index": 1,
+                            "resultId": "297697fe-83d1-4a69-dc2d-43eb48e032ac",
+                            "content": "OK, 5 rows affected in 2.599ms"
+                        }
+                    ]
+                },
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 214
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 214,
+                            "length": 430
+                        },
+                        "contentStart": 216,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 92,
+                "end": 119,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 2,
+                            "index": 0,
+                            "resultId": "9d328765-6c3a-43e8-b708-e9fcacfe2cdd",
+                            "content": "OK, 0 records retrieved in 25.622ms"
+                        },
+                        {
+                            "type": 2,
+                            "index": 1,
+                            "resultId": "6ab1c953-a76a-48a3-bdc7-f52434da3a73",
+                            "content": "OK, 19 rows affected in 2.008ms"
+                        }
+                    ]
+                },
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 185
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 185,
+                            "length": 809
+                        },
+                        "contentStart": 187,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 120,
+                "end": 145,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 2,
+                            "index": 0,
+                            "resultId": "32ef57a5-6458-491a-968d-d94d6adfb005",
+                            "content": "OK, 0 records retrieved in 25.099ms"
+                        },
+                        {
+                            "type": 2,
+                            "index": 1,
+                            "resultId": "830fa4ca-5101-4ab2-f48a-a0b7e5232f4a",
+                            "content": "OK, 16 rows affected in 2.038ms"
+                        }
+                    ]
+                },
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 212
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 212,
+                            "length": 836
+                        },
+                        "contentStart": 214,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 146,
+                "end": 169,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 2,
+                            "index": 0,
+                            "resultId": "fab79ed0-7bc1-42e9-8f8f-2746b70b2b98",
+                            "content": "OK, 0 records retrieved in 23.355ms"
+                        },
+                        {
+                            "type": 2,
+                            "index": 1,
+                            "resultId": "f1db83ea-d66a-4b1c-8170-f1731a19ad8c",
+                            "content": "OK, 15 rows affected in 2.031ms"
+                        }
+                    ]
+                },
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 169
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 169,
+                            "length": 731
+                        },
+                        "contentStart": 171,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 170,
+                "end": 183,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 2,
+                            "index": 0,
+                            "resultId": "cbeeb3c6-81a0-4e36-9103-24f9550bf7bd",
+                            "content": "OK, 0 records retrieved in 20.148ms"
+                        },
+                        {
+                            "type": 2,
+                            "index": 1,
+                            "resultId": "58f11a9b-ecd5-42cd-a834-6a24c60f4ba8",
+                            "content": "OK, 5 rows affected in 2.408ms"
+                        }
+                    ]
+                },
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 200
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 200,
+                            "length": 382
+                        },
+                        "contentStart": 202,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 184,
+                "end": 211,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 2,
+                            "index": 0,
+                            "resultId": "39db7a5b-1ee0-4123-b4a7-536d3d5bc8ef",
+                            "content": "OK, 0 records retrieved in 27.154ms"
+                        },
+                        {
+                            "type": 2,
+                            "index": 1,
+                            "resultId": "243b3a0f-1b45-45dc-b33f-c8273fef6e96",
+                            "content": "OK, 18 rows affected in 2.323ms"
+                        }
+                    ]
+                },
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 196
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 196,
+                            "length": 947
+                        },
+                        "contentStart": 198,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 212,
+                "end": 212,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        }
+    ]
+}

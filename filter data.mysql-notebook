@@ -1,0 +1,543 @@
+{
+    "type": "MySQLNotebook",
+    "version": "1.0",
+    "caption": "Untitled-1",
+    "content": "USE employer_database ; \n\n#Q1 — Retrieve all employee details\nSELECT * \nFROM employees;\n\n#Q2 — Retrieve name, department, and salary only\nSELECT employee_name , department , salary\nfrom employees;\n\n#Q3 — Find all unique departments\nSELECT DISTINCT department \nfrom employees\nWHERE department is not NULL;\n\n#Q4 — Employees in the IT department\nSELECT *\nfrom employees\nwhere department = \"IT\";\n\n#Q5 — Employees earning more than ₹80,000\nSELECT *\nfrom employees\nwhere salary>80000;\n\n#Q7 — Employees in IT or Finance\nSELECT *\nfrom employees \nwhere department = \"IT\" OR department =\"finance\";\n\n#Q8 — Employees who are NOT Active\nSELECT *\nfrom employees\nwhere employment_status != \"active\" ;\n\n#Q9 — Employees in IT, HR, or Finance\nSELECT *\nfrom employees \nwhere department = \"IT\" OR department =\"finance\" OR department =\"hr\";\n\nSELECT *\nfrom employees \nwhere department IN (\"IT\" , \"finance\" ,\"hr\") ;\n\n#Q10 — Employees with salary between ₹50,000 and ₹80,000\nSELECT *\nFROM employees\nwhere salary >=50000 and salary<=80000 ;\n\n#Q11 — Employees whose name starts with 'A'\nSELECT *\nfrom employees \nwhere employee_name LIKE \"A%\" ;\n\n#Q12 — Employees with a Gmail address\nSELECT *\nfrom employees\nwhere email like \"%gmail.com\" ;\n\n#Q13 — Active employees whose name starts with 'S'\nSELECT *\nfrom employees \nwhere employment_status = \"active\" and employee_name LIKE \"s%\";\n\n#NULL CHECK\n#Q14 — Employees with no manager assigned\nSELECT *\nfrom employees \nwhere manager_id is NULL ;\n\n#Q15 — Employees with an email on record\nSELECT *\nfrom employees\nwhere email is NOT NULL ;\n\n#Q16 — Sort by salary (lowest to highest)\nSELECT *\nfrom employees\nWHERE salary is NOT NULL\nORDER BY salary ;\n\n#Q17 — Sort by salary (highest to lowest)\nSELECT *\nfrom employees\nWHERE salary is NOT NULL\nORDER BY salary DESC;\n\n#Q18 — Sort by department, then salary descending\nSELECT *\nFROM employees\nORDER BY department DESC , salary DESC ; \n\n\n# Limiting Results\n#Q19 — Top 5 highest-paid employees\nselect * \nFROM employees\nORDER BY salary DESC\nLIMIT 5 ; \n\n#🧩 Combined Queries\n#Q20 — Top 3 highest-paid IT/Finance employees earning ₹70K–₹1L\nSELECT *\nFROM employees\nWHERE department IN (\"it\" , \"finance\")\nAND salary BETWEEN 70000 and 100000\nORDER BY salary DESC\nLIMIT 3;\n\n\n\n",
+    "options": {
+        "tabSize": 4,
+        "indentSize": 4,
+        "insertSpaces": true,
+        "defaultEOL": "LF",
+        "trimAutoWhitespace": true
+    },
+    "viewState": {
+        "cursorState": [
+            {
+                "inSelectionMode": false,
+                "selectionStart": {
+                    "lineNumber": 97,
+                    "column": 15
+                },
+                "position": {
+                    "lineNumber": 97,
+                    "column": 15
+                }
+            }
+        ],
+        "viewState": {
+            "scrollLeft": 0,
+            "firstPosition": {
+                "lineNumber": 90,
+                "column": 1
+            },
+            "firstPositionDeltaTop": -16
+        },
+        "contributionsState": {
+            "editor.contrib.folding": {},
+            "editor.contrib.wordHighlighter": true
+        }
+    },
+    "contexts": [
+        {
+            "state": {
+                "start": 1,
+                "end": 111,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "5bcc0ff9-e5cf-4aa7-aaf2-2adcd3b5e179"
+                    ]
+                },
+                "currentHeight": 157,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 23
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 23,
+                            "length": 64
+                        },
+                        "contentStart": 62,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 87,
+                            "length": 109
+                        },
+                        "contentStart": 138,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 196,
+                            "length": 108
+                        },
+                        "contentStart": 232,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 304,
+                            "length": 87
+                        },
+                        "contentStart": 343,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 391,
+                            "length": 87
+                        },
+                        "contentStart": 435,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 478,
+                            "length": 109
+                        },
+                        "contentStart": 513,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 587,
+                            "length": 98
+                        },
+                        "contentStart": 624,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 685,
+                            "length": 134
+                        },
+                        "contentStart": 725,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 819,
+                            "length": 73
+                        },
+                        "contentStart": 821,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 892,
+                            "length": 123
+                        },
+                        "contentStart": 951,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1015,
+                            "length": 102
+                        },
+                        "contentStart": 1061,
+                        "state": 3
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1117,
+                            "length": 95
+                        },
+                        "contentStart": 1157,
+                        "state": 3
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1212,
+                            "length": 141
+                        },
+                        "contentStart": 1265,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1353,
+                            "length": 107
+                        },
+                        "contentStart": 1409,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1460,
+                            "length": 92
+                        },
+                        "contentStart": 1503,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1552,
+                            "length": 110
+                        },
+                        "contentStart": 1596,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1662,
+                            "length": 114
+                        },
+                        "contentStart": 1706,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1776,
+                            "length": 116
+                        },
+                        "contentStart": 1828,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1892,
+                            "length": 114
+                        },
+                        "contentStart": 1951,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2006,
+                            "length": 216
+                        },
+                        "contentStart": 2094,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2222,
+                            "length": 3
+                        },
+                        "contentStart": 2221,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "4cbd4ec5-10b4-43b5-884a-15fa3aa3a41d",
+                    "resultId": "5bcc0ff9-e5cf-4aa7-aaf2-2adcd3b5e179",
+                    "rows": [
+                        {
+                            "0": 3,
+                            "1": "Priya Singh",
+                            "2": "Female",
+                            "3": "Finance",
+                            "4": 100000,
+                            "5": null,
+                            "6": "2010-09-20",
+                            "7": "Pune",
+                            "8": "Maharashtra",
+                            "9": "priya.singh@company.com",
+                            "10": "Active"
+                        },
+                        {
+                            "0": 15,
+                            "1": "Karan Shah",
+                            "2": "Male",
+                            "3": "IT",
+                            "4": 95000,
+                            "5": 1,
+                            "6": "2018-04-19",
+                            "7": "Mumbai",
+                            "8": "Maharashtra",
+                            "9": "karan@gmail.com",
+                            "10": "Active"
+                        },
+                        {
+                            "0": 29,
+                            "1": "Mohit Arora",
+                            "2": "Male",
+                            "3": "IT",
+                            "4": 91000,
+                            "5": 7,
+                            "6": "2018-07-07",
+                            "7": "Delhi",
+                            "8": "Delhi",
+                            "9": "mohit@gmail.com",
+                            "10": "Active"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "employee_id",
+                            "field": "0",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": true,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "employee_name",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        },
+                        {
+                            "title": "gender",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        },
+                        {
+                            "title": "department",
+                            "field": "3",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        },
+                        {
+                            "title": "salary",
+                            "field": "4",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        },
+                        {
+                            "title": "manager_id",
+                            "field": "5",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        },
+                        {
+                            "title": "hire_date",
+                            "field": "6",
+                            "dataType": {
+                                "type": 27,
+                                "needsQuotes": true
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        },
+                        {
+                            "title": "city",
+                            "field": "7",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        },
+                        {
+                            "title": "state",
+                            "field": "8",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        },
+                        {
+                            "title": "email",
+                            "field": "9",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        },
+                        {
+                            "title": "employment_status",
+                            "field": "10",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 3 records retrieved in 11.924ms"
+                    },
+                    "totalRowCount": 3,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 20,
+                    "sql": " \n\n#🧩 Combined Queries\n#Q20 — Top 3 highest-paid IT/Finance employees earning ₹70K–₹1L\nSELECT *\nFROM employees\nWHERE department IN (\"it\" , \"finance\")\nAND salary BETWEEN 70000 and 100000\nORDER BY salary DESC\nLIMIT 3;",
+                    "updatable": true,
+                    "fullTableName": "employees"
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 112,
+                "end": 112,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        }
+    ]
+}
