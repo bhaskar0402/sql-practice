@@ -1,0 +1,380 @@
+{
+    "type": "MySQLNotebook",
+    "version": "1.0",
+    "caption": "Untitled-1",
+    "content": "use employer_database;\n\nSELECT *\nfrom employees;\n\n#Aggregate Functions + GROUP BY + HAVING\n#Q1: Find the total number of employees in the company.\nSELECT count(*)\nfrom employees;\n\n#Q2: Find how many employees have a manager assigned.\nSELECT COUNT(*)\nfrom employees\nwhere manager_id is NOT NULL;\n\nSELECT COUNT(manager_id) FROM employees;\n\n#Q4: Find the total salary expense of the company.\nSELECT sum(salary) as total_expense\nFROM employees;\n\n#Q5: Find the average salary of employees.\nSELECT AVG(salary) as avg_salary\nFROM employees;\n\n#Q6: Find the highest and lowest salary in the company.\nSELECT MAX(salary) as highest , MIN(salary) AS lowest\nFROM employees;\n\n#Q7: Find the total number of employees in each department.\nSELECT department , count(*) as totat_employees\nFROM employees\nGROUP BY department ;\n\n#Q8: Find the average salary of employees in each city.\nSELECT city ,avg(salary) AS avg_salary\nFROM employees\nGROUP by city;\n\n#Q9: Find the total number of Active employees in each department.\nSELECT department ,count(*) as active_employees\nFROM employees\nWHERE employment_status = \"active\"\nGROUP by department ;\n\n#Q10: Find the total salary expense of employees working in Mumbai for each department.\nSELECT department, sum(salary) as total_expense\nfrom employees\nwhere city = \"mumbai\"\nGROUP BY department;\n\n#Q11: Find departments having more than 5 employees.\nSELECT department , count(*) as total_employee\nfrom employees\nGROUP by department\nHAVING COUNT(*) > 5;\n\n#Q12: Find cities whose average salary is greater than ₹70,000.\nSELECT city , avg(salary)\nFROM employees\ngroup by city\nhaving avg(salary) > 70000;\n\n#Q13: Find departments whose average salary lies between ₹60,000 and ₹80,000.\nSELECT department , AVG(salary)\nfrom employees\ngroup by department \nhaving AVG(salary) BETWEEN 60000 and 80000 ;\n\n#Q14: Find departments having at least 4 employees who are currently Active.\nSELECT department , count(*)\nfrom employees \nWHERE employment_status = \"active\"\nGROUP by department \nHAVING count(*) >=4 ; \n\n#Q15: Find Duplicate Records By Email\nSELECT email , count(*) \nFrom employees\nGROUP by email\nHAVING COUNT(*) > 1 ; \n\n\n\n\n\n\n\n\n",
+    "options": {
+        "tabSize": 4,
+        "indentSize": 4,
+        "insertSpaces": true,
+        "defaultEOL": "LF",
+        "trimAutoWhitespace": true
+    },
+    "viewState": {
+        "cursorState": [
+            {
+                "inSelectionMode": false,
+                "selectionStart": {
+                    "lineNumber": 77,
+                    "column": 37
+                },
+                "position": {
+                    "lineNumber": 77,
+                    "column": 37
+                }
+            }
+        ],
+        "viewState": {
+            "scrollLeft": 0,
+            "firstPosition": {
+                "lineNumber": 1,
+                "column": 1
+            },
+            "firstPositionDeltaTop": 0
+        },
+        "contributionsState": {
+            "editor.contrib.folding": {},
+            "editor.contrib.wordHighlighter": true
+        }
+    },
+    "contexts": [
+        {
+            "state": {
+                "start": 1,
+                "end": 89,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "3294ebba-ad99-426f-d0f0-2d0b55df4587",
+                        "869e3410-ae9b-4f5a-a07f-3ccf18bfbc6d"
+                    ]
+                },
+                "currentHeight": 169,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 22
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 22,
+                            "length": 26
+                        },
+                        "contentStart": 24,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 48,
+                            "length": 130
+                        },
+                        "contentStart": 147,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 178,
+                            "length": 116
+                        },
+                        "contentStart": 234,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 294,
+                            "length": 42
+                        },
+                        "contentStart": 296,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 336,
+                            "length": 104
+                        },
+                        "contentStart": 389,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 440,
+                            "length": 93
+                        },
+                        "contentStart": 485,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 533,
+                            "length": 127
+                        },
+                        "contentStart": 591,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 660,
+                            "length": 146
+                        },
+                        "contentStart": 722,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 806,
+                            "length": 126
+                        },
+                        "contentStart": 864,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 932,
+                            "length": 188
+                        },
+                        "contentStart": 1001,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1120,
+                            "length": 195
+                        },
+                        "contentStart": 1210,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1315,
+                            "length": 157
+                        },
+                        "contentStart": 1370,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1472,
+                            "length": 148
+                        },
+                        "contentStart": 1538,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1620,
+                            "length": 192
+                        },
+                        "contentStart": 1700,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1812,
+                            "length": 201
+                        },
+                        "contentStart": 1891,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2013,
+                            "length": 117
+                        },
+                        "contentStart": 2054,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2130,
+                            "length": 9
+                        },
+                        "contentStart": 2129,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "facaab46-cdf0-434d-e1d8-fb05dbcf9039",
+                    "resultId": "3294ebba-ad99-426f-d0f0-2d0b55df4587",
+                    "rows": [
+                        {
+                            "0": "Mumbai",
+                            "1": "87833.3333"
+                        },
+                        {
+                            "0": "Ahmedabad",
+                            "1": "78500.0000"
+                        },
+                        {
+                            "0": "Lucknow",
+                            "1": "71000.0000"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "city",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "avg(salary)",
+                            "field": "1",
+                            "dataType": {
+                                "type": 10,
+                                "flags": [
+                                    "UNSIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 65,
+                                "numericScale": 30,
+                                "parameterFormatType": "TwoOrOneOrZero",
+                                "synonyms": [
+                                    "FIXED",
+                                    "NUMERIC",
+                                    "DEC"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 3 records retrieved in 0.494ms"
+                    },
+                    "totalRowCount": 3,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 13,
+                    "sql": "\n\n#Q12: Find cities whose average salary is greater than ₹70,000.\nSELECT city , avg(salary)\nFROM employees\ngroup by city\nhaving avg(salary) > 70000;",
+                    "updatable": false,
+                    "fullTableName": ""
+                },
+                {
+                    "tabId": "facaab46-cdf0-434d-e1d8-fb05dbcf9039",
+                    "resultId": "869e3410-ae9b-4f5a-a07f-3ccf18bfbc6d",
+                    "rows": [
+                        {
+                            "0": "Finance",
+                            "1": "75800.0000"
+                        },
+                        {
+                            "0": "Marketing",
+                            "1": "64857.1429"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "department",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "AVG(salary)",
+                            "field": "1",
+                            "dataType": {
+                                "type": 10,
+                                "flags": [
+                                    "UNSIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 65,
+                                "numericScale": 30,
+                                "parameterFormatType": "TwoOrOneOrZero",
+                                "synonyms": [
+                                    "FIXED",
+                                    "NUMERIC",
+                                    "DEC"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 2 records retrieved in 0.484ms"
+                    },
+                    "totalRowCount": 2,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 14,
+                    "sql": "\n\n#Q13: Find departments whose average salary lies between ₹60,000 and ₹80,000.\nSELECT department , AVG(salary)\nfrom employees\ngroup by department \nhaving AVG(salary) BETWEEN 60000 and 80000 ;",
+                    "updatable": false,
+                    "fullTableName": ""
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 90,
+                "end": 90,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        }
+    ]
+}
