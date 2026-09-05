@@ -1,0 +1,517 @@
+{
+    "type": "MySQLNotebook",
+    "version": "1.0",
+    "caption": "Untitled-2",
+    "content": "USE employer_database;\n\n#Q1. Find employees whose salary is greater than the average salary of the company\nSELECT *\nFROM employees\nWHERE salary > (\nSELECT AVG(salary)\nFROM employees\n);\n\n#Q2. Find employees earning the highest salary in the company\nSELECT *\nFROM employees\nWHERE salary = ( \nSELECT max(salary)\nfrom employees\n);\n\n#Q3. Find employees who work in the same department as 'Aarav Sharma'\nSELECT *\nFROM employees\nWHERE department IN ( \nSELECT department \nFROM employees\nWHERE employee_name =\"aarav sharma\"\n);\n\n#Q4. Find employees whose salary is greater than all employees in the Support department\nSELECT *\nFROM employees\nWHERE salary > ( \nSELECT MAX(salary)\nFROM employees\nWHERE department = \"support\"\n);\n\n#Q5. Find employees working in departments where at least one employee is currently on leave\nSELECT *\nFROM employees\nWHERE department in (\nSELECT department\nFROM employees\nWHERE employment_status = \"on leave\" )\nORDER BY department;\n\n#Q6. Find employees who have received bonuses\nSELECT *\nFROM employees e \nLEFT JOIN bonuses b\non b.employee_id = e.employee_id \nWHERE bonus_amount is NOT NULL ;\n\nSELECT *\nFROM employees\nWHERE employee_id IN (\n    SELECT DISTINCT employee_id\n    FROM bonuses\n);\n\nSELECT *\nFROM employees e\nWHERE EXISTS (\n    SELECT 1\n    FROM bonuses b\n    WHERE b.employee_id = e.employee_id\n); \n\n#Q7. Find employees who never received any bonus\nSELECT *\nFROM employees e \nWHERE NOT EXISTS ( \nSELECT 1 \nFROM bonuses b \nWHERE b.employee_id =  e.employee_id\n);\n\n#Q8. Find employees whose salary is greater than the average salary of their own department\nSELECT *\nFROM employees e\nWHERE  salary > ( \nSELECT  AVG(salary) \nFROM employees e1\nWHERE e.department = e1.department \n);\n\n#Q9. Find employees who are assigned to at least one project\nSELECT *\nFROM employees e\nWHERE EXISTS ( \nSELECT 1 \nFROM employee_projects ep\nWHERE e.employee_id = ep.employee_id\n);\n\n#Q10. Find employees who earn more than their manager\nSELECT *\nFROM employees e\nLEFT JOIN employees m \nON e.manager_id = m.employee_id\nWHERE e.salary > m.salary ; \n\n\n\n\n\n\n",
+    "options": {
+        "tabSize": 4,
+        "indentSize": 4,
+        "insertSpaces": true,
+        "defaultEOL": "LF",
+        "trimAutoWhitespace": true
+    },
+    "viewState": null,
+    "contexts": [
+        {
+            "state": {
+                "start": 1,
+                "end": 107,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "7ecbeafd-4dbb-4494-dc26-febddb7022c1"
+                    ]
+                },
+                "currentHeight": 300,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 22
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 22,
+                            "length": 162
+                        },
+                        "contentStart": 107,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 184,
+                            "length": 142
+                        },
+                        "contentStart": 248,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 326,
+                            "length": 191
+                        },
+                        "contentStart": 398,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 517,
+                            "length": 198
+                        },
+                        "contentStart": 608,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 715,
+                            "length": 233
+                        },
+                        "contentStart": 810,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 948,
+                            "length": 161
+                        },
+                        "contentStart": 996,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1109,
+                            "length": 100
+                        },
+                        "contentStart": 1111,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1209,
+                            "length": 117
+                        },
+                        "contentStart": 1211,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1326,
+                            "length": 164
+                        },
+                        "contentStart": 1378,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1490,
+                            "length": 216
+                        },
+                        "contentStart": 1584,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1706,
+                            "length": 180
+                        },
+                        "contentStart": 1769,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1886,
+                            "length": 164
+                        },
+                        "contentStart": 1942,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2050,
+                            "length": 8
+                        },
+                        "contentStart": 2049,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "e0ebfe46-15fb-4794-c1d4-b41c6d90c05f",
+                    "resultId": "7ecbeafd-4dbb-4494-dc26-febddb7022c1",
+                    "rows": [
+                        {
+                            "0": 45,
+                            "1": "High Salary",
+                            "2": "Female",
+                            "3": "IT",
+                            "4": 150000,
+                            "5": 1,
+                            "6": "2016-05-15",
+                            "7": "Mumbai",
+                            "8": "Maharashtra",
+                            "9": "high@gmail.com",
+                            "10": "Active"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "employee_id",
+                            "field": "0",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "employee_name",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "gender",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "department",
+                            "field": "3",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "salary",
+                            "field": "4",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "manager_id",
+                            "field": "5",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "hire_date",
+                            "field": "6",
+                            "dataType": {
+                                "type": 27,
+                                "needsQuotes": true
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "city",
+                            "field": "7",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "state",
+                            "field": "8",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "email",
+                            "field": "9",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "employment_status",
+                            "field": "10",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 1 record retrieved in 0.605ms"
+                    },
+                    "totalRowCount": 1,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 13,
+                    "sql": " \n\n\nSELECT *\nFROM employees e\nWHERE salary > (\n    SELECT m.salary\n    FROM employees m\n    WHERE m.employee_id = e.manager_id\n);",
+                    "updatable": true,
+                    "fullTableName": ""
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 1,
+                "end": 107,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 22
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 22,
+                            "length": 162
+                        },
+                        "contentStart": 107,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 184,
+                            "length": 142
+                        },
+                        "contentStart": 248,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 326,
+                            "length": 191
+                        },
+                        "contentStart": 398,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 517,
+                            "length": 198
+                        },
+                        "contentStart": 608,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 715,
+                            "length": 233
+                        },
+                        "contentStart": 810,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 948,
+                            "length": 161
+                        },
+                        "contentStart": 996,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1109,
+                            "length": 100
+                        },
+                        "contentStart": 1111,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1209,
+                            "length": 117
+                        },
+                        "contentStart": 1211,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1326,
+                            "length": 164
+                        },
+                        "contentStart": 1378,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1490,
+                            "length": 216
+                        },
+                        "contentStart": 1584,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1706,
+                            "length": 179
+                        },
+                        "contentStart": 1769,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1885,
+                            "length": 8
+                        },
+                        "contentStart": 1884,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": []
+        }
+    ]
+}
