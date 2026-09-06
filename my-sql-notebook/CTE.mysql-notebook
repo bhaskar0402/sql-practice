@@ -1,0 +1,262 @@
+{
+    "type": "MySQLNotebook",
+    "version": "1.0",
+    "caption": "Untitled-1",
+    "content": "USE employer_database;\n\n#Q1. Using a CTE, find departments having more than 5 employees.\n\nWITH emp as ( \nSELECT department , COUNT(*) as total_emp\nFROM employees \nGROUP BY department\n)\nSELECT * \nFROM emp \nWHERE total_emp > 5;\n\n\nSELECT department\nFROM employees\nGROUP BY department \nHAVING COUNT(*) > 5 ; \n\n#Q2. Using Multiple CTEs, find departments whose average salary is greater than the company average salary.\n\nWITH emp1 as ( \nSELECT AVG(salary) as avg_salary\nFROM employees\n),\nemp2 as (\nselect department , avg(salary) as dep_salary\nfrom employees\ngroup by department\n)\nselect department \nfrom emp1 , emp2\nwhere dep_salary > avg_salary ;\n\n\nWITH emp as (\n\nSELECT * ,\navg(salary) over() as avg_salary,\navg(salary) over( PARTITION BY department) as dep_salary\nFROM employees\n)\n\nSELECT DISTINCT department \nFROM emp \nWHERE dep_salary > avg_salary ;\n\n#Q3. Using a CTE, find employees who have received more than one bonus.\n\nSELECT * \nFROM bonuses;\n\nSELECT employee_id\nFROM bonuses \nGROUP BY employee_id \nHAVING COUNT(*)>1;\n\nWITH temp as ( \nSELECT employee_id , COUNT(*) as no_bonus\nFROM bonuses\nGROUP by employee_id    \n)\nSELECT *\nFROM temp\nWHERE no_bonus > 1;\n\n#Q4. Using a CTE, find the top 2 highest-paid employees from each department.\nWITH emp as ( \nSELECT * , \nRANK() OVER( PARTITION BY department ORDER BY salary DESC ) as ranking\nFROM employees\nWHERE department is NOT NULL \n)\n\nSELECT *\nFROM emp \nWHERE ranking <3 ; \n\n#Q5. Using Multiple CTEs, find employees whose salary is greater than the average salary of their department, \n# and display their department rank.\n\nWITH emp as (\nSELECT * , \nRANK() OVER( PARTITION BY department ORDER BY salary ) as ranking ,\navg(salary) OVER ( PARTITION BY department ) as avg_salary\nFROM employees\n)\n\nSELECT *\nFROM emp \nWHERE salary > avg_salary ;\n\n\n\n\n\n\n",
+    "options": {
+        "tabSize": 4,
+        "indentSize": 4,
+        "insertSpaces": true,
+        "defaultEOL": "LF",
+        "trimAutoWhitespace": true
+    },
+    "viewState": {
+        "cursorState": [
+            {
+                "inSelectionMode": false,
+                "selectionStart": {
+                    "lineNumber": 21,
+                    "column": 1
+                },
+                "position": {
+                    "lineNumber": 21,
+                    "column": 1
+                }
+            }
+        ],
+        "viewState": {
+            "scrollLeft": 0,
+            "firstPosition": {
+                "lineNumber": 15,
+                "column": 1
+            },
+            "firstPositionDeltaTop": -23
+        },
+        "contributionsState": {
+            "editor.contrib.folding": {},
+            "editor.contrib.wordHighlighter": false
+        }
+    },
+    "contexts": [
+        {
+            "state": {
+                "start": 1,
+                "end": 98,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 22
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 22,
+                            "length": 203
+                        },
+                        "contentStart": 90,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 225,
+                            "length": 78
+                        },
+                        "contentStart": 228,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 303,
+                            "length": 339
+                        },
+                        "contentStart": 415,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 642,
+                            "length": 207
+                        },
+                        "contentStart": 645,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 849,
+                            "length": 98
+                        },
+                        "contentStart": 924,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 947,
+                            "length": 75
+                        },
+                        "contentStart": 949,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1022,
+                            "length": 138
+                        },
+                        "contentStart": 1024,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1160,
+                            "length": 263
+                        },
+                        "contentStart": 1240,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1423,
+                            "length": 369
+                        },
+                        "contentStart": 1575,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1792,
+                            "length": 7
+                        },
+                        "contentStart": 1791,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 1,
+                "end": 98,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 22
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 22,
+                            "length": 203
+                        },
+                        "contentStart": 90,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 225,
+                            "length": 78
+                        },
+                        "contentStart": 228,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 303,
+                            "length": 339
+                        },
+                        "contentStart": 415,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 642,
+                            "length": 207
+                        },
+                        "contentStart": 645,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 849,
+                            "length": 98
+                        },
+                        "contentStart": 924,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 947,
+                            "length": 75
+                        },
+                        "contentStart": 949,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1022,
+                            "length": 138
+                        },
+                        "contentStart": 1024,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1160,
+                            "length": 263
+                        },
+                        "contentStart": 1240,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1423,
+                            "length": 369
+                        },
+                        "contentStart": 1575,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1792,
+                            "length": 7
+                        },
+                        "contentStart": 1791,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": []
+        }
+    ]
+}
