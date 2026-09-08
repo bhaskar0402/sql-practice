@@ -1,0 +1,717 @@
+{
+    "type": "MySQLNotebook",
+    "version": "1.0",
+    "caption": "Untitled-1",
+    "content": "USE employer_database;\n\n#Q11. Categorize employees based on salary.\n\nSELECT * , \n    case WHEN salary >= 100000 then \"high salary\" \n    WHEN salary BETWEEN 60000 AND 100000 then \"mid salary\"\n    ELSE \"low salary\" \n    END as employee_status\nfrom employees ;\n\n#Q12. Categorize employees based on experience.\nSELECT * , \n    CASE \n    WHEN TIMESTAMPDIFF(year , hire_date , curdate()) <=2 then \"junior\"\n    WHEN TIMESTAMPDIFF(year , hire_date , curdate()) BETWEEN 2 and 5 then \"mid\"\n    ELSE \"senior\"\n    END as position\nFROM employees ;    \n\n#Q13. Find the total number of Active employees using CASE.\n-- Approach 1: Simple COUNT with WHERE\nSELECT COUNT(*) AS total_employees\nFROM employees\nWHERE employment_status = 'Active';\n\n-- Approach 2: CASE inside SUM()\nSELECT SUM(\n    case WHEN employment_status = 'Active' THEN 1\n    ELSE 0 \n    END\n) as sum\nfrom employees ;\n\n#Q14. Display project status with business-friendly labels.\nSELECT * , \n    CASE\n     WHEN status = \"ongoing\" then \"In Progress\" \n     WHEN status = \"completed\" THEN \"Successfully Delivered\"\n     WHEN status = \"On Hold\" THEN \"Awaiting Approval\"\n     END as business_friendly \nFROM projects ;\n\n#Q15. Display employee names along with a custom message.\nSELECT\n    employee_name,\n    salary,\n    employment_status,\n    CASE\n        WHEN employment_status = 'Active' AND salary > 100000 THEN 'Star Employee'\n        WHEN employment_status = 'Active' THEN 'Active Employee'\n        ELSE 'Needs Attention'\n    END AS employee_label\nFROM employees;",
+    "options": {
+        "tabSize": 4,
+        "indentSize": 4,
+        "insertSpaces": true,
+        "defaultEOL": "LF",
+        "trimAutoWhitespace": true
+    },
+    "viewState": {
+        "cursorState": [
+            {
+                "inSelectionMode": false,
+                "selectionStart": {
+                    "lineNumber": 49,
+                    "column": 9
+                },
+                "position": {
+                    "lineNumber": 49,
+                    "column": 9
+                }
+            }
+        ],
+        "viewState": {
+            "scrollLeft": 0,
+            "firstPosition": {
+                "lineNumber": 38,
+                "column": 1
+            },
+            "firstPositionDeltaTop": -15
+        },
+        "contributionsState": {
+            "editor.contrib.folding": {},
+            "editor.contrib.wordHighlighter": true
+        }
+    },
+    "contexts": [
+        {
+            "state": {
+                "start": 1,
+                "end": 54,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "11032cdc-d8ba-4dd5-99d7-9daeb67a9d99",
+                        "be479b24-21e2-491e-a3c3-cf1063a9b1a0"
+                    ]
+                },
+                "currentHeight": 300,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 22
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 22,
+                            "length": 235
+                        },
+                        "contentStart": 69,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 257,
+                            "length": 277
+                        },
+                        "contentStart": 307,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 534,
+                            "length": 190
+                        },
+                        "contentStart": 639,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 724,
+                            "length": 142
+                        },
+                        "contentStart": 759,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 866,
+                            "length": 293
+                        },
+                        "contentStart": 928,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1159,
+                            "length": 350
+                        },
+                        "contentStart": 1219,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "3bfc3c52-3fb6-4008-d296-36001ae3709a",
+                    "resultId": "11032cdc-d8ba-4dd5-99d7-9daeb67a9d99",
+                    "rows": [
+                        {
+                            "0": 1,
+                            "1": "CRM System",
+                            "2": 500000,
+                            "3": 1,
+                            "4": "2025-01-01",
+                            "5": "Ongoing",
+                            "6": "In Progress"
+                        },
+                        {
+                            "0": 2,
+                            "1": "Banking App",
+                            "2": 800000,
+                            "3": 2,
+                            "4": "2024-06-01",
+                            "5": "Ongoing",
+                            "6": "In Progress"
+                        },
+                        {
+                            "0": 3,
+                            "1": "Ecommerce Platform",
+                            "2": 650000,
+                            "3": 3,
+                            "4": "2024-09-01",
+                            "5": "Completed",
+                            "6": "Successfully Delivered"
+                        },
+                        {
+                            "0": 4,
+                            "1": "Analytics Dashboard",
+                            "2": 300000,
+                            "3": 4,
+                            "4": "2025-02-01",
+                            "5": "On Hold",
+                            "6": "Awaiting Approval"
+                        },
+                        {
+                            "0": 5,
+                            "1": "HR Management System",
+                            "2": 250000,
+                            "3": 5,
+                            "4": "2025-03-01",
+                            "5": "Ongoing",
+                            "6": "In Progress"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "project_id",
+                            "field": "0",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": true,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "project_name",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "project_budget",
+                            "field": "2",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "client_id",
+                            "field": "3",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "start_date",
+                            "field": "4",
+                            "dataType": {
+                                "type": 27,
+                                "needsQuotes": true
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "status",
+                            "field": "5",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "business_friendly",
+                            "field": "6",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 5 records retrieved in 1.256ms"
+                    },
+                    "totalRowCount": 5,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 5,
+                    "sql": "\n\n#Q14. Display project status with business-friendly labels.\nSELECT * , \n    CASE\n     WHEN status = \"ongoing\" then \"In Progress\" \n     WHEN status = \"completed\" THEN \"Successfully Delivered\"\n     WHEN status = \"On Hold\" THEN \"Awaiting Approval\"\n     END as business_friendly \nFROM projects ;",
+                    "updatable": true,
+                    "fullTableName": "projects"
+                },
+                {
+                    "tabId": "3bfc3c52-3fb6-4008-d296-36001ae3709a",
+                    "resultId": "be479b24-21e2-491e-a3c3-cf1063a9b1a0",
+                    "rows": [
+                        {
+                            "0": "Raj Sharma",
+                            "1": 120000,
+                            "2": "Active",
+                            "3": "Star Employee"
+                        },
+                        {
+                            "0": "Ankit Verma",
+                            "1": 90000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Priya Singh",
+                            "1": 100000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Amit Patel",
+                            "1": 85000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Neha Joshi",
+                            "1": 88000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Rohit Mehta",
+                            "1": 75000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Sneha Kapoor",
+                            "1": 115000,
+                            "2": "Active",
+                            "3": "Star Employee"
+                        },
+                        {
+                            "0": "Kunal Shah",
+                            "1": 105000,
+                            "2": "Active",
+                            "3": "Star Employee"
+                        },
+                        {
+                            "0": "Aarav Sharma",
+                            "1": 75000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Priya Mehta",
+                            "1": 55000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Rohit Jain",
+                            "1": 68000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Sneha Patil",
+                            "1": 80000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Vikas Singh",
+                            "1": 45000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Anjali Verma",
+                            "1": 60000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Karan Shah",
+                            "1": 95000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Meera Joshi",
+                            "1": 53000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Pooja Nair",
+                            "1": 72000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Low Salary",
+                            "1": 25000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Arjun Gupta",
+                            "1": 78000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Rahul Kapoor",
+                            "1": 47000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Simran Kaur",
+                            "1": 62000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Aman Mishra",
+                            "1": 54000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Dev Malhotra",
+                            "1": 67000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Nisha Rao",
+                            "1": 83000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Ravi Kumar",
+                            "1": 30000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Yash Thakur",
+                            "1": 50000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Ritika Sen",
+                            "1": 59000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Tanvi Desai",
+                            "1": 52000,
+                            "2": "On Leave",
+                            "3": "Needs Attention"
+                        },
+                        {
+                            "0": "Mohit Arora",
+                            "1": 91000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Kriti Sharma",
+                            "1": 71000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Neha Iyer",
+                            "1": 49000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Varun Sethi",
+                            "1": 61000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Harsh Pandey",
+                            "1": 76000,
+                            "2": "On Leave",
+                            "3": "Needs Attention"
+                        },
+                        {
+                            "0": "Divya Pillai",
+                            "1": 32000,
+                            "2": "On Leave",
+                            "3": "Needs Attention"
+                        },
+                        {
+                            "0": "Isha Kulkarni",
+                            "1": 69000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Sonal Jain",
+                            "1": 51000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Aisha Khan",
+                            "1": 46000,
+                            "2": "Inactive",
+                            "3": "Needs Attention"
+                        },
+                        {
+                            "0": "Siddharth Roy",
+                            "1": 87000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Preeti Das",
+                            "1": 64000,
+                            "2": "Terminated",
+                            "3": "Needs Attention"
+                        },
+                        {
+                            "0": "Rajat Saxena",
+                            "1": 73000,
+                            "2": "Terminated",
+                            "3": "Needs Attention"
+                        },
+                        {
+                            "0": "Akash Yadav",
+                            "1": 88000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "No Manager",
+                            "1": 65000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Same Salary A",
+                            "1": 70000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Same Salary B",
+                            "1": 70000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "High Salary",
+                            "1": 150000,
+                            "2": "Active",
+                            "3": "Star Employee"
+                        },
+                        {
+                            "0": "Test User",
+                            "1": null,
+                            "2": "Inactive",
+                            "3": "Needs Attention"
+                        },
+                        {
+                            "0": "NULL Employee",
+                            "1": 40000,
+                            "2": "Inactive",
+                            "3": "Needs Attention"
+                        },
+                        {
+                            "0": "Aarav Sharma",
+                            "1": 75000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Rohit Jain",
+                            "1": 68000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Priya Mehta",
+                            "1": 55000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Vikas Singh",
+                            "1": 45000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        },
+                        {
+                            "0": "Anjali Verma",
+                            "1": 60000,
+                            "2": "Active",
+                            "3": "Active Employee"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "employee_name",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "salary",
+                            "field": "1",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "employment_status",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "employee_label",
+                            "field": "3",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 52 records retrieved in 0.501ms"
+                    },
+                    "totalRowCount": 52,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 6,
+                    "sql": "\n\n#Q15. Display employee names along with a custom message.\nSELECT\n    employee_name,\n    salary,\n    employment_status,\n    CASE\n        WHEN employment_status = 'Active' AND salary > 100000 THEN 'Star Employee'\n        WHEN employment_status = 'Active' THEN 'Active Employee'\n        ELSE 'Needs Attention'\n    END AS employee_label\nFROM employees;",
+                    "updatable": false,
+                    "fullTableName": ""
+                }
+            ]
+        }
+    ]
+}

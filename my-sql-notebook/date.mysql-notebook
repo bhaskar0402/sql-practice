@@ -1,0 +1,304 @@
+{
+    "type": "MySQLNotebook",
+    "version": "1.0",
+    "caption": "Untitled-1",
+    "content": "USE employer_database;\n\n#Q6. Find employees who joined in the last 30 days.\n#-- Approach 1: Shorthand interval subtraction\nSELECT * \nFROM employees\nWHERE hire_date >= CURDATE() - INTERVAL 30 DAY;\n\n#-- Approach 2: Explicit DATE_SUB()\nSELECT * FROM employees\nWHERE hire_date >= DATE_SUB(CURDATE(), INTERVAL 30 DAY);\n\nSELECT *\nFROM employees \nwhere CURDATE() - hire_date < 30 ;\n\n#Q7. Find employees who have completed more than 5 years in the company.\nSELECT * FROM employees\nWHERE TIMESTAMPDIFF(YEAR, hire_date, CURDATE()) > 5;\n\n#Q8. Display employee name, joining year, joining month name, and total years of experience.\nSELECT\n    employee_name,\n    YEAR(hire_date) AS joining_year,\n    MONTHNAME(hire_date) AS month_name,\n    TIMESTAMPDIFF(YEAR, hire_date, CURDATE()) AS total_years_experience\nFROM employees;\n\n#Q9. Display bonus details along with the day name on which the bonus was awarded.\n\nSELECT\n    *,\n    DAYNAME(bonus_date) AS bonus_day\nFROM bonuses;\n\n#Q10. Display all projects along with their start date in the format: 01-Jan-2025\nSELECT\n    *,\n    DATE_FORMAT(start_date, '%d-%b-%Y') AS start_format_date\nFROM projects;\n\n\n\n\n",
+    "options": {
+        "tabSize": 4,
+        "indentSize": 4,
+        "insertSpaces": true,
+        "defaultEOL": "LF",
+        "trimAutoWhitespace": true
+    },
+    "viewState": null,
+    "contexts": [
+        {
+            "state": {
+                "start": 1,
+                "end": 45,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "4fcc4c5f-fdf1-4441-f8a5-2895ad01decb"
+                    ]
+                },
+                "currentHeight": 300,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 22
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 22,
+                            "length": 173
+                        },
+                        "contentStart": 123,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 195,
+                            "length": 118
+                        },
+                        "contentStart": 233,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 313,
+                            "length": 61
+                        },
+                        "contentStart": 315,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 374,
+                            "length": 151
+                        },
+                        "contentStart": 449,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 525,
+                            "length": 285
+                        },
+                        "contentStart": 620,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 810,
+                            "length": 150
+                        },
+                        "contentStart": 896,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 960,
+                            "length": 173
+                        },
+                        "contentStart": 1044,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1133,
+                            "length": 5
+                        },
+                        "contentStart": 1132,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "46aa0f83-09c5-40fb-cf19-6acd7c4da31a",
+                    "resultId": "4fcc4c5f-fdf1-4441-f8a5-2895ad01decb",
+                    "rows": [
+                        {
+                            "0": 1,
+                            "1": "CRM System",
+                            "2": 500000,
+                            "3": 1,
+                            "4": "2025-01-01",
+                            "5": "Ongoing",
+                            "6": "01-Jan-2025"
+                        },
+                        {
+                            "0": 2,
+                            "1": "Banking App",
+                            "2": 800000,
+                            "3": 2,
+                            "4": "2024-06-01",
+                            "5": "Ongoing",
+                            "6": "01-Jun-2024"
+                        },
+                        {
+                            "0": 3,
+                            "1": "Ecommerce Platform",
+                            "2": 650000,
+                            "3": 3,
+                            "4": "2024-09-01",
+                            "5": "Completed",
+                            "6": "01-Sep-2024"
+                        },
+                        {
+                            "0": 4,
+                            "1": "Analytics Dashboard",
+                            "2": 300000,
+                            "3": 4,
+                            "4": "2025-02-01",
+                            "5": "On Hold",
+                            "6": "01-Feb-2025"
+                        },
+                        {
+                            "0": 5,
+                            "1": "HR Management System",
+                            "2": 250000,
+                            "3": 5,
+                            "4": "2025-03-01",
+                            "5": "Ongoing",
+                            "6": "01-Mar-2025"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "project_id",
+                            "field": "0",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": true,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "project_name",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "project_budget",
+                            "field": "2",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "client_id",
+                            "field": "3",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "start_date",
+                            "field": "4",
+                            "dataType": {
+                                "type": 27,
+                                "needsQuotes": true
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "status",
+                            "field": "5",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "start_format_date",
+                            "field": "6",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 5 records retrieved in 11.728ms"
+                    },
+                    "totalRowCount": 5,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 7,
+                    "sql": "\n\n#Q10. Display all projects along with their start date in the format: 01-Jan-2025\nSELECT\n    *,\n    DATE_FORMAT(start_date, '%d-%b-%Y') AS start_format_date\nFROM projects;",
+                    "updatable": true,
+                    "fullTableName": "projects"
+                }
+            ]
+        }
+    ]
+}
