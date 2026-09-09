@@ -1,0 +1,1870 @@
+{
+    "type": "MySQLNotebook",
+    "version": "1.0",
+    "caption": "Untitled-1",
+    "content": "use employer_database;\n\n# Example 1\nSELECT *,\n    ROW_NUMBER() OVER(ORDER BY salary DESC) AS row_num\nFROM employees;\n\n#Example2\nSELECT *,\n    RANK() OVER(PARTITION BY department ORDER BY salary DESC) AS dept_rank\nFROM employees;\n\n#Example3\nSELECT *,\n    LAG(salary)  OVER(ORDER BY employee_id) AS previous_salary,\n    LEAD(salary) OVER(ORDER BY employee_id) AS next_salary\nFROM employees;\n\n#Q1. Assign a unique row number to each employee based on salary\nSELECT * , \n    ROW_NUMBER() OVER( ORDER BY salary ) AS row_num\nFROM employees;\n#Q2. Rank employees based on salary using RANK()\nSELECT * ,\nRANK() OVER(order by salary DESC) as ranking\nFROM employees;\n\n#Q3. Rank employees based on salary using DENSE_RANK()\nSELECT * ,\nDENSE_RANK() OVER(order by salary DESC) as ranking\nFROM employees;\n\n#Q4. Compare ROW_NUMBER vs RANK vs DENSE_RANK side by side\nSELECT * ,\nROW_NUMBER() OVER( ORDER BY salary ) AS row_num,\nDENSE_RANK() OVER(order by salary DESC) as dens_rank,\nRANK() OVER(order by salary DESC) as ranking \nFROM employees;\n\n#Q5. Find the employee with the 2nd highest salary\nSELECT *\nFROM employees \nWHERE salary< ( \nSELECT MAX(salary)\nFROM employees\n)\nLIMIT 1 ;\n\nWITH ranked_employees AS (\n    SELECT *,\n           RANK() OVER(ORDER BY salary DESC) AS salary_rank\n    FROM employees\n)\nSELECT *\nFROM ranked_employees\nWHERE salary_rank = 2;\n\nSELECT *\nFROM employees\nORDER BY salary DESC\nLIMIT 1 OFFSET 1;\n\nSELECT *\nFROM (\n SELECT * , \n RANK() OVER( ORDER BY salary DESC ) as salary_rank\n FROM employees\n) as t\nWHERE salary_rank = 2 ;\n\n#Q6. Display each employee's rank within their department based on salary\n\nSELECT * ,\nRANK() OVER(\nPARTITION BY department ORDER BY salary DESC \n) as ranking\nFROM employees ; \n\n#Q7. Find the highest-paid employee from each department\nWITH rank_salry_dept as (\nSELECT * , \nRANK() OVER( PARTITION BY department ORDER BY salary DESC) as ranking\nFROM employees\n)\n\nSELECT*\nFROM rank_salry_dept\nWHERE ranking = 1 ;\n\nSELECT *\nFROM ( \nSELECT * , \nRANK() OVER( PARTITION BY department ORDER BY salary DESC) as ranking\nFROM employees\n) as sal_rank\nWHERE ranking = 1 ;\n\n#Q8. Find employees earning more than the previous employee\nWITH emp as ( \nSELECT * , \nLAG(salary) OVER( ORDER BY employee_id) as previous_sal\nFROM employees\n)\n\nSELECT *\nFROM emp \nWHERE salary > previous_sal ; \n\nSELECT *\nFROM (\n    SELECT *,\n        LAG(salary) OVER(ORDER BY employee_id) AS previous_salary\n    FROM employees\n) t\nWHERE salary > previous_salary;\n\n#Q9. Find employees earning less than the next employee\nWITH emp as (\nSELECT * ,\nLEAD(salary) OVER( ORDER BY employee_id ) as next_sal\nFROM employees\n)\n\nSELECT *\nFROM emp\nWHERE salary < next_sal ;\n\n#Q10. Display the salary difference between each employee and the previous employee\nWITH emp as ( \nSELECT * , \nLEAD(salary) OVER ( ORDER BY employee_id  ) as next_salary\nFROM employees\n)\n\nSELECT (next_salary - salary) as difference \nFROM emp ;\n\nSELECT *,\n    salary - LAG(salary) OVER(ORDER BY employee_id) AS salary_difference\nFROM employees;\n\n\n#Q11. LAG vs LEAD — side-by-side comparison\nSELECT *,\n    LAG(salary)  OVER(ORDER BY employee_id) AS previous_salary,\n    LEAD(salary) OVER(ORDER BY employee_id) AS next_salary\nFROM employees;\n\n#Q13. Find departments where multiple employees share the same salary rank\n\nWITH emp as (\nSELECT * ,\nDENSE_RANK() OVER( PARTITION BY department ORDER BY salary DESC ) as ranking \nFROM employees\nWHERE department is NOT NULL\n)\n\nSELECT department , COUNT(ranking)\nFROM emp\nGROUP by department, ranking \nHAVING COUNT(ranking) > 1 ;\n\n#Q14. Display each employee along with the total salary expense of their department\n\nSELECT employee_name, salary , department,\n    SUM(salary) OVER(PARTITION BY department) AS total_salary_expense\nFROM employees;\n\n#Q15. Display a running total of salaries within each department\nSELECT *,\n    SUM(salary) OVER(PARTITION BY department ORDER BY employee_id) AS running_total\nFROM employees;\n\n\n#Q16. Find employees earning more than the average salary of their department\n\nWITH EMP AS ( \nSELECT * ,\nAVG(salary) OVER( PARTITION BY department ) as avg_salary\nFROM employees \n)\n\nSELECT * \nFROM emp\nwhere salary > avg_salary ; \n\nSELECT * \nFROM ( \nSELECT * , \navg(salary) OVER( PARTITION BY department) as avg_salary\nFROM employees\n) as t\nWHERE salary > avg_salary ;\n\n\n\n",
+    "options": {
+        "tabSize": 4,
+        "indentSize": 4,
+        "insertSpaces": true,
+        "defaultEOL": "LF",
+        "trimAutoWhitespace": true
+    },
+    "viewState": null,
+    "contexts": [
+        {
+            "state": {
+                "start": 1,
+                "end": 197,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "a28522c1-adb9-4a4f-ce5b-b0e03509fbd7",
+                        "39f03b8c-12ea-475b-8599-a4f01fc5e165"
+                    ]
+                },
+                "currentHeight": 300,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 22
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 22,
+                            "length": 94
+                        },
+                        "contentStart": 36,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 116,
+                            "length": 112
+                        },
+                        "contentStart": 128,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 228,
+                            "length": 160
+                        },
+                        "contentStart": 240,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 388,
+                            "length": 146
+                        },
+                        "contentStart": 455,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 534,
+                            "length": 121
+                        },
+                        "contentStart": 584,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 655,
+                            "length": 134
+                        },
+                        "contentStart": 712,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 789,
+                            "length": 236
+                        },
+                        "contentStart": 850,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1025,
+                            "length": 140
+                        },
+                        "contentStart": 1078,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1165,
+                            "length": 177
+                        },
+                        "contentStart": 1167,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1342,
+                            "length": 64
+                        },
+                        "contentStart": 1344,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1406,
+                            "length": 129
+                        },
+                        "contentStart": 1408,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1535,
+                            "length": 176
+                        },
+                        "contentStart": 1612,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1711,
+                            "length": 234
+                        },
+                        "contentStart": 1771,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1945,
+                            "length": 149
+                        },
+                        "contentStart": 1947,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2094,
+                            "length": 211
+                        },
+                        "contentStart": 2156,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2305,
+                            "length": 153
+                        },
+                        "contentStart": 2308,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2458,
+                            "length": 198
+                        },
+                        "contentStart": 2516,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2656,
+                            "length": 245
+                        },
+                        "contentStart": 2742,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2901,
+                            "length": 100
+                        },
+                        "contentStart": 2903,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 3001,
+                            "length": 195
+                        },
+                        "contentStart": 3048,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 3196,
+                            "length": 329
+                        },
+                        "contentStart": 3274,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 3525,
+                            "length": 215
+                        },
+                        "contentStart": 3612,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 3740,
+                            "length": 176
+                        },
+                        "contentStart": 3807,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 3916,
+                            "length": 231
+                        },
+                        "contentStart": 3998,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 4147,
+                            "length": 139
+                        },
+                        "contentStart": 4150,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 4286,
+                            "length": 4
+                        },
+                        "contentStart": 4285,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "772e4863-0838-416b-ceac-ea0e49b8ee25",
+                    "resultId": "a28522c1-adb9-4a4f-ce5b-b0e03509fbd7",
+                    "rows": [
+                        {
+                            "0": "NULL Employee",
+                            "1": 40000,
+                            "2": null,
+                            "3": "40000"
+                        },
+                        {
+                            "0": "Priya Singh",
+                            "1": 100000,
+                            "2": "Finance",
+                            "3": "758000"
+                        },
+                        {
+                            "0": "Rohit Jain",
+                            "1": 68000,
+                            "2": "Finance",
+                            "3": "758000"
+                        },
+                        {
+                            "0": "Isha Kulkarni",
+                            "1": 69000,
+                            "2": "Finance",
+                            "3": "758000"
+                        },
+                        {
+                            "0": "Kunal Shah",
+                            "1": 105000,
+                            "2": "Finance",
+                            "3": "758000"
+                        },
+                        {
+                            "0": "Kriti Sharma",
+                            "1": 71000,
+                            "2": "Finance",
+                            "3": "758000"
+                        },
+                        {
+                            "0": "Rohit Jain",
+                            "1": 68000,
+                            "2": "Finance",
+                            "3": "758000"
+                        },
+                        {
+                            "0": "No Manager",
+                            "1": 65000,
+                            "2": "Finance",
+                            "3": "758000"
+                        },
+                        {
+                            "0": "Rajat Saxena",
+                            "1": 73000,
+                            "2": "Finance",
+                            "3": "758000"
+                        },
+                        {
+                            "0": "Dev Malhotra",
+                            "1": 67000,
+                            "2": "Finance",
+                            "3": "758000"
+                        },
+                        {
+                            "0": "Pooja Nair",
+                            "1": 72000,
+                            "2": "Finance",
+                            "3": "758000"
+                        },
+                        {
+                            "0": "Tanvi Desai",
+                            "1": 52000,
+                            "2": "HR",
+                            "3": "410000"
+                        },
+                        {
+                            "0": "Ankit Verma",
+                            "1": 90000,
+                            "2": "HR",
+                            "3": "410000"
+                        },
+                        {
+                            "0": "Priya Mehta",
+                            "1": 55000,
+                            "2": "HR",
+                            "3": "410000"
+                        },
+                        {
+                            "0": "Priya Mehta",
+                            "1": 55000,
+                            "2": "HR",
+                            "3": "410000"
+                        },
+                        {
+                            "0": "Aman Mishra",
+                            "1": 54000,
+                            "2": "HR",
+                            "3": "410000"
+                        },
+                        {
+                            "0": "Meera Joshi",
+                            "1": 53000,
+                            "2": "HR",
+                            "3": "410000"
+                        },
+                        {
+                            "0": "Sonal Jain",
+                            "1": 51000,
+                            "2": "HR",
+                            "3": "410000"
+                        },
+                        {
+                            "0": "Raj Sharma",
+                            "1": 120000,
+                            "2": "IT",
+                            "3": "1353000"
+                        },
+                        {
+                            "0": "Sneha Kapoor",
+                            "1": 115000,
+                            "2": "IT",
+                            "3": "1353000"
+                        },
+                        {
+                            "0": "Aarav Sharma",
+                            "1": 75000,
+                            "2": "IT",
+                            "3": "1353000"
+                        },
+                        {
+                            "0": "Sneha Patil",
+                            "1": 80000,
+                            "2": "IT",
+                            "3": "1353000"
+                        },
+                        {
+                            "0": "Karan Shah",
+                            "1": 95000,
+                            "2": "IT",
+                            "3": "1353000"
+                        },
+                        {
+                            "0": "Arjun Gupta",
+                            "1": 78000,
+                            "2": "IT",
+                            "3": "1353000"
+                        },
+                        {
+                            "0": "Harsh Pandey",
+                            "1": 76000,
+                            "2": "IT",
+                            "3": "1353000"
+                        },
+                        {
+                            "0": "Nisha Rao",
+                            "1": 83000,
+                            "2": "IT",
+                            "3": "1353000"
+                        },
+                        {
+                            "0": "Test User",
+                            "1": null,
+                            "2": "IT",
+                            "3": "1353000"
+                        },
+                        {
+                            "0": "Mohit Arora",
+                            "1": 91000,
+                            "2": "IT",
+                            "3": "1353000"
+                        },
+                        {
+                            "0": "Siddharth Roy",
+                            "1": 87000,
+                            "2": "IT",
+                            "3": "1353000"
+                        },
+                        {
+                            "0": "Akash Yadav",
+                            "1": 88000,
+                            "2": "IT",
+                            "3": "1353000"
+                        },
+                        {
+                            "0": "Same Salary A",
+                            "1": 70000,
+                            "2": "IT",
+                            "3": "1353000"
+                        },
+                        {
+                            "0": "Same Salary B",
+                            "1": 70000,
+                            "2": "IT",
+                            "3": "1353000"
+                        },
+                        {
+                            "0": "High Salary",
+                            "1": 150000,
+                            "2": "IT",
+                            "3": "1353000"
+                        },
+                        {
+                            "0": "Aarav Sharma",
+                            "1": 75000,
+                            "2": "IT",
+                            "3": "1353000"
+                        },
+                        {
+                            "0": "Preeti Das",
+                            "1": 64000,
+                            "2": "Marketing",
+                            "3": "454000"
+                        },
+                        {
+                            "0": "Anjali Verma",
+                            "1": 60000,
+                            "2": "Marketing",
+                            "3": "454000"
+                        },
+                        {
+                            "0": "Varun Sethi",
+                            "1": 61000,
+                            "2": "Marketing",
+                            "3": "454000"
+                        },
+                        {
+                            "0": "Ritika Sen",
+                            "1": 59000,
+                            "2": "Marketing",
+                            "3": "454000"
+                        },
+                        {
+                            "0": "Simran Kaur",
+                            "1": 62000,
+                            "2": "Marketing",
+                            "3": "454000"
+                        },
+                        {
+                            "0": "Neha Joshi",
+                            "1": 88000,
+                            "2": "Marketing",
+                            "3": "454000"
+                        },
+                        {
+                            "0": "Anjali Verma",
+                            "1": 60000,
+                            "2": "Marketing",
+                            "3": "454000"
+                        },
+                        {
+                            "0": "Rahul Kapoor",
+                            "1": 47000,
+                            "2": "Sales",
+                            "3": "367000"
+                        },
+                        {
+                            "0": "Aisha Khan",
+                            "1": 46000,
+                            "2": "Sales",
+                            "3": "367000"
+                        },
+                        {
+                            "0": "Yash Thakur",
+                            "1": 50000,
+                            "2": "Sales",
+                            "3": "367000"
+                        },
+                        {
+                            "0": "Vikas Singh",
+                            "1": 45000,
+                            "2": "Sales",
+                            "3": "367000"
+                        },
+                        {
+                            "0": "Neha Iyer",
+                            "1": 49000,
+                            "2": "Sales",
+                            "3": "367000"
+                        },
+                        {
+                            "0": "Amit Patel",
+                            "1": 85000,
+                            "2": "Sales",
+                            "3": "367000"
+                        },
+                        {
+                            "0": "Vikas Singh",
+                            "1": 45000,
+                            "2": "Sales",
+                            "3": "367000"
+                        },
+                        {
+                            "0": "Low Salary",
+                            "1": 25000,
+                            "2": "Support",
+                            "3": "162000"
+                        },
+                        {
+                            "0": "Ravi Kumar",
+                            "1": 30000,
+                            "2": "Support",
+                            "3": "162000"
+                        },
+                        {
+                            "0": "Rohit Mehta",
+                            "1": 75000,
+                            "2": "Support",
+                            "3": "162000"
+                        },
+                        {
+                            "0": "Divya Pillai",
+                            "1": 32000,
+                            "2": "Support",
+                            "3": "162000"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "employee_name",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "salary",
+                            "field": "1",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "department",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "total_salary_expense",
+                            "field": "3",
+                            "dataType": {
+                                "type": 10,
+                                "flags": [
+                                    "UNSIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 65,
+                                "numericScale": 30,
+                                "parameterFormatType": "TwoOrOneOrZero",
+                                "synonyms": [
+                                    "FIXED",
+                                    "NUMERIC",
+                                    "DEC"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 52 records retrieved in 0.689ms"
+                    },
+                    "totalRowCount": 52,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 22,
+                    "sql": "\n\n#Q14. Display each employee along with the total salary expense of their department\n\nSELECT employee_name, salary , department,\n    SUM(salary) OVER(PARTITION BY department) AS total_salary_expense\nFROM employees;",
+                    "updatable": false,
+                    "fullTableName": ""
+                },
+                {
+                    "tabId": "772e4863-0838-416b-ceac-ea0e49b8ee25",
+                    "resultId": "39f03b8c-12ea-475b-8599-a4f01fc5e165",
+                    "rows": [
+                        {
+                            "0": 47,
+                            "1": "NULL Employee",
+                            "2": "Male",
+                            "3": null,
+                            "4": 40000,
+                            "5": null,
+                            "6": "2023-02-10",
+                            "7": "Indore",
+                            "8": null,
+                            "9": null,
+                            "10": "Inactive",
+                            "11": "40000"
+                        },
+                        {
+                            "0": 3,
+                            "1": "Priya Singh",
+                            "2": "Female",
+                            "3": "Finance",
+                            "4": 100000,
+                            "5": null,
+                            "6": "2010-09-20",
+                            "7": "Pune",
+                            "8": "Maharashtra",
+                            "9": "priya.singh@company.com",
+                            "10": "Active",
+                            "11": "100000"
+                        },
+                        {
+                            "0": 8,
+                            "1": "Kunal Shah",
+                            "2": "Male",
+                            "3": "Finance",
+                            "4": 105000,
+                            "5": null,
+                            "6": "2013-02-14",
+                            "7": "Ahmedabad",
+                            "8": "Gujarat",
+                            "9": "kunal.shah@company.com",
+                            "10": "Active",
+                            "11": "205000"
+                        },
+                        {
+                            "0": 11,
+                            "1": "Rohit Jain",
+                            "2": "Male",
+                            "3": "Finance",
+                            "4": 68000,
+                            "5": 3,
+                            "6": "2019-07-23",
+                            "7": "Pune",
+                            "8": "Maharashtra",
+                            "9": "rohit@gmail.com",
+                            "10": "Active",
+                            "11": "273000"
+                        },
+                        {
+                            "0": 17,
+                            "1": "Pooja Nair",
+                            "2": "Female",
+                            "3": "Finance",
+                            "4": 72000,
+                            "5": 3,
+                            "6": "2019-12-01",
+                            "7": "Chennai",
+                            "8": "Tamil Nadu",
+                            "9": "pooja@gmail.com",
+                            "10": "Active",
+                            "11": "345000"
+                        },
+                        {
+                            "0": 23,
+                            "1": "Dev Malhotra",
+                            "2": "Male",
+                            "3": "Finance",
+                            "4": 67000,
+                            "5": 3,
+                            "6": "2017-03-15",
+                            "7": "Delhi",
+                            "8": "Delhi",
+                            "9": "dev@gmail.com",
+                            "10": "Active",
+                            "11": "412000"
+                        },
+                        {
+                            "0": 30,
+                            "1": "Kriti Sharma",
+                            "2": "Female",
+                            "3": "Finance",
+                            "4": 71000,
+                            "5": 3,
+                            "6": "2020-12-21",
+                            "7": "Pune",
+                            "8": "Maharashtra",
+                            "9": "kriti@gmail.com",
+                            "10": "Active",
+                            "11": "483000"
+                        },
+                        {
+                            "0": 35,
+                            "1": "Isha Kulkarni",
+                            "2": "Female",
+                            "3": "Finance",
+                            "4": 69000,
+                            "5": 3,
+                            "6": "2021-08-14",
+                            "7": "Pune",
+                            "8": "Maharashtra",
+                            "9": "isha@gmail.com",
+                            "10": "Active",
+                            "11": "552000"
+                        },
+                        {
+                            "0": 40,
+                            "1": "Rajat Saxena",
+                            "2": "Male",
+                            "3": "Finance",
+                            "4": 73000,
+                            "5": 3,
+                            "6": "2019-06-06",
+                            "7": "Delhi",
+                            "8": "Delhi",
+                            "9": "rajat@gmail.com",
+                            "10": "Terminated",
+                            "11": "625000"
+                        },
+                        {
+                            "0": 42,
+                            "1": "No Manager",
+                            "2": "Male",
+                            "3": "Finance",
+                            "4": 65000,
+                            "5": null,
+                            "6": "2020-02-20",
+                            "7": "Nagpur",
+                            "8": "Maharashtra",
+                            "9": "nomgr@gmail.com",
+                            "10": "Active",
+                            "11": "690000"
+                        },
+                        {
+                            "0": 49,
+                            "1": "Rohit Jain",
+                            "2": "Male",
+                            "3": "Finance",
+                            "4": 68000,
+                            "5": 3,
+                            "6": "2019-07-23",
+                            "7": "Pune",
+                            "8": "Maharashtra",
+                            "9": "rohit@gmail.com",
+                            "10": "Active",
+                            "11": "758000"
+                        },
+                        {
+                            "0": 2,
+                            "1": "Ankit Verma",
+                            "2": "Male",
+                            "3": "HR",
+                            "4": 90000,
+                            "5": null,
+                            "6": "2015-06-15",
+                            "7": "Delhi",
+                            "8": "Delhi",
+                            "9": "ankit.verma@company.com",
+                            "10": "Active",
+                            "11": "90000"
+                        },
+                        {
+                            "0": 10,
+                            "1": "Priya Mehta",
+                            "2": "Female",
+                            "3": "HR",
+                            "4": 55000,
+                            "5": 2,
+                            "6": "2020-03-10",
+                            "7": "Delhi",
+                            "8": "Delhi",
+                            "9": "priya@gmail.com",
+                            "10": "Active",
+                            "11": "145000"
+                        },
+                        {
+                            "0": 16,
+                            "1": "Meera Joshi",
+                            "2": "Female",
+                            "3": "HR",
+                            "4": 53000,
+                            "5": 2,
+                            "6": "2021-06-14",
+                            "7": "Pune",
+                            "8": "Maharashtra",
+                            "9": "meera@gmail.com",
+                            "10": "Active",
+                            "11": "198000"
+                        },
+                        {
+                            "0": 22,
+                            "1": "Aman Mishra",
+                            "2": "Male",
+                            "3": "HR",
+                            "4": 54000,
+                            "5": 2,
+                            "6": "2021-04-30",
+                            "7": "Lucknow",
+                            "8": "UP",
+                            "9": "aman@gmail.com",
+                            "10": "Active",
+                            "11": "252000"
+                        },
+                        {
+                            "0": 28,
+                            "1": "Tanvi Desai",
+                            "2": "Female",
+                            "3": "HR",
+                            "4": 52000,
+                            "5": 2,
+                            "6": "2019-09-27",
+                            "7": "Ahmedabad",
+                            "8": "Gujarat",
+                            "9": "tanvi@gmail.com",
+                            "10": "On Leave",
+                            "11": "304000"
+                        },
+                        {
+                            "0": 36,
+                            "1": "Sonal Jain",
+                            "2": "Female",
+                            "3": "HR",
+                            "4": 51000,
+                            "5": 2,
+                            "6": "2023-04-04",
+                            "7": "Jaipur",
+                            "8": "Rajasthan",
+                            "9": "sonal@gmail.com",
+                            "10": "Active",
+                            "11": "355000"
+                        },
+                        {
+                            "0": 50,
+                            "1": "Priya Mehta",
+                            "2": "Female",
+                            "3": "HR",
+                            "4": 55000,
+                            "5": 2,
+                            "6": "2020-03-10",
+                            "7": "Delhi",
+                            "8": "Delhi",
+                            "9": "priya@gmail.com",
+                            "10": "Active",
+                            "11": "410000"
+                        },
+                        {
+                            "0": 1,
+                            "1": "Raj Sharma",
+                            "2": "Male",
+                            "3": "IT",
+                            "4": 120000,
+                            "5": null,
+                            "6": "2012-03-01",
+                            "7": "Mumbai",
+                            "8": "Maharashtra",
+                            "9": "raj.sharma@company.com",
+                            "10": "Active",
+                            "11": "120000"
+                        },
+                        {
+                            "0": 7,
+                            "1": "Sneha Kapoor",
+                            "2": "Female",
+                            "3": "IT",
+                            "4": 115000,
+                            "5": null,
+                            "6": "2011-11-30",
+                            "7": "Mumbai",
+                            "8": "Maharashtra",
+                            "9": "sneha.kapoor@company.com",
+                            "10": "Active",
+                            "11": "235000"
+                        },
+                        {
+                            "0": 9,
+                            "1": "Aarav Sharma",
+                            "2": "Male",
+                            "3": "IT",
+                            "4": 75000,
+                            "5": 1,
+                            "6": "2021-01-15",
+                            "7": "Mumbai",
+                            "8": "Maharashtra",
+                            "9": "aarav@gmail.com",
+                            "10": "Active",
+                            "11": "310000"
+                        },
+                        {
+                            "0": 12,
+                            "1": "Sneha Patil",
+                            "2": "Female",
+                            "3": "IT",
+                            "4": 80000,
+                            "5": 1,
+                            "6": "2022-02-12",
+                            "7": "Mumbai",
+                            "8": "Maharashtra",
+                            "9": "sneha@gmail.com",
+                            "10": "Active",
+                            "11": "390000"
+                        },
+                        {
+                            "0": 15,
+                            "1": "Karan Shah",
+                            "2": "Male",
+                            "3": "IT",
+                            "4": 95000,
+                            "5": 1,
+                            "6": "2018-04-19",
+                            "7": "Mumbai",
+                            "8": "Maharashtra",
+                            "9": "karan@gmail.com",
+                            "10": "Active",
+                            "11": "485000"
+                        },
+                        {
+                            "0": 19,
+                            "1": "Arjun Gupta",
+                            "2": "Male",
+                            "3": "IT",
+                            "4": 78000,
+                            "5": 1,
+                            "6": "2020-08-11",
+                            "7": "Mumbai",
+                            "8": "Maharashtra",
+                            "9": "arjun@gmail.com",
+                            "10": "Active",
+                            "11": "563000"
+                        },
+                        {
+                            "0": 24,
+                            "1": "Nisha Rao",
+                            "2": "Female",
+                            "3": "IT",
+                            "4": 83000,
+                            "5": 1,
+                            "6": "2021-05-25",
+                            "7": "Bangalore",
+                            "8": "Karnataka",
+                            "9": "nisha@gmail.com",
+                            "10": "Active",
+                            "11": "646000"
+                        },
+                        {
+                            "0": 29,
+                            "1": "Mohit Arora",
+                            "2": "Male",
+                            "3": "IT",
+                            "4": 91000,
+                            "5": 7,
+                            "6": "2018-07-07",
+                            "7": "Delhi",
+                            "8": "Delhi",
+                            "9": "mohit@gmail.com",
+                            "10": "Active",
+                            "11": "737000"
+                        },
+                        {
+                            "0": 33,
+                            "1": "Harsh Pandey",
+                            "2": "Male",
+                            "3": "IT",
+                            "4": 76000,
+                            "5": 7,
+                            "6": "2022-06-11",
+                            "7": "Mumbai",
+                            "8": "Maharashtra",
+                            "9": "harsh@gmail.com",
+                            "10": "On Leave",
+                            "11": "813000"
+                        },
+                        {
+                            "0": 38,
+                            "1": "Siddharth Roy",
+                            "2": "Male",
+                            "3": "IT",
+                            "4": 87000,
+                            "5": 1,
+                            "6": "2018-05-17",
+                            "7": "Kolkata",
+                            "8": "West Bengal",
+                            "9": "sid@gmail.com",
+                            "10": "Active",
+                            "11": "900000"
+                        },
+                        {
+                            "0": 41,
+                            "1": "Akash Yadav",
+                            "2": "Male",
+                            "3": "IT",
+                            "4": 88000,
+                            "5": 7,
+                            "6": "2017-08-22",
+                            "7": "Lucknow",
+                            "8": "UP",
+                            "9": "akash@gmail.com",
+                            "10": "Active",
+                            "11": "988000"
+                        },
+                        {
+                            "0": 43,
+                            "1": "Same Salary A",
+                            "2": "Female",
+                            "3": "IT",
+                            "4": 70000,
+                            "5": 1,
+                            "6": "2021-03-03",
+                            "7": "Mumbai",
+                            "8": "Maharashtra",
+                            "9": "same1@gmail.com",
+                            "10": "Active",
+                            "11": "1058000"
+                        },
+                        {
+                            "0": 44,
+                            "1": "Same Salary B",
+                            "2": "Male",
+                            "3": "IT",
+                            "4": 70000,
+                            "5": 1,
+                            "6": "2021-03-04",
+                            "7": "Mumbai",
+                            "8": "Maharashtra",
+                            "9": "same2@gmail.com",
+                            "10": "Active",
+                            "11": "1128000"
+                        },
+                        {
+                            "0": 45,
+                            "1": "High Salary",
+                            "2": "Female",
+                            "3": "IT",
+                            "4": 150000,
+                            "5": 1,
+                            "6": "2016-05-15",
+                            "7": "Mumbai",
+                            "8": "Maharashtra",
+                            "9": "high@gmail.com",
+                            "10": "Active",
+                            "11": "1278000"
+                        },
+                        {
+                            "0": 46,
+                            "1": "Test User",
+                            "2": "Female",
+                            "3": "IT",
+                            "4": null,
+                            "5": 1,
+                            "6": "2022-09-01",
+                            "7": "Mumbai",
+                            "8": "Maharashtra",
+                            "9": "test@gmail.com",
+                            "10": "Inactive",
+                            "11": "1278000"
+                        },
+                        {
+                            "0": 48,
+                            "1": "Aarav Sharma",
+                            "2": "Male",
+                            "3": "IT",
+                            "4": 75000,
+                            "5": 1,
+                            "6": "2021-01-15",
+                            "7": "Mumbai",
+                            "8": "Maharashtra",
+                            "9": "aarav@gmail.com",
+                            "10": "Active",
+                            "11": "1353000"
+                        },
+                        {
+                            "0": 5,
+                            "1": "Neha Joshi",
+                            "2": "Female",
+                            "3": "Marketing",
+                            "4": 88000,
+                            "5": null,
+                            "6": "2014-04-05",
+                            "7": "Hyderabad",
+                            "8": "Telangana",
+                            "9": "neha.joshi@company.com",
+                            "10": "Active",
+                            "11": "88000"
+                        },
+                        {
+                            "0": 14,
+                            "1": "Anjali Verma",
+                            "2": "Female",
+                            "3": "Marketing",
+                            "4": 60000,
+                            "5": 5,
+                            "6": "2020-09-17",
+                            "7": "Hyderabad",
+                            "8": "Telangana",
+                            "9": "anjali@gmail.com",
+                            "10": "Active",
+                            "11": "148000"
+                        },
+                        {
+                            "0": 21,
+                            "1": "Simran Kaur",
+                            "2": "Female",
+                            "3": "Marketing",
+                            "4": 62000,
+                            "5": 5,
+                            "6": "2022-10-09",
+                            "7": "Chandigarh",
+                            "8": "Punjab",
+                            "9": "simran@gmail.com",
+                            "10": "Active",
+                            "11": "210000"
+                        },
+                        {
+                            "0": 27,
+                            "1": "Ritika Sen",
+                            "2": "Female",
+                            "3": "Marketing",
+                            "4": 59000,
+                            "5": 5,
+                            "6": "2019-11-13",
+                            "7": "Kolkata",
+                            "8": "West Bengal",
+                            "9": "ritika@gmail.com",
+                            "10": "Active",
+                            "11": "269000"
+                        },
+                        {
+                            "0": 32,
+                            "1": "Varun Sethi",
+                            "2": "Male",
+                            "3": "Marketing",
+                            "4": 61000,
+                            "5": 5,
+                            "6": "2020-01-05",
+                            "7": "Delhi",
+                            "8": "Delhi",
+                            "9": "varun@gmail.com",
+                            "10": "Active",
+                            "11": "330000"
+                        },
+                        {
+                            "0": 39,
+                            "1": "Preeti Das",
+                            "2": "Female",
+                            "3": "Marketing",
+                            "4": 64000,
+                            "5": 5,
+                            "6": "2020-10-10",
+                            "7": "Kolkata",
+                            "8": "West Bengal",
+                            "9": "preeti@gmail.com",
+                            "10": "Terminated",
+                            "11": "394000"
+                        },
+                        {
+                            "0": 52,
+                            "1": "Anjali Verma",
+                            "2": "Female",
+                            "3": "Marketing",
+                            "4": 60000,
+                            "5": 5,
+                            "6": "2020-09-17",
+                            "7": "Hyderabad",
+                            "8": "Telangana",
+                            "9": "anjali@gmail.com",
+                            "10": "Active",
+                            "11": "454000"
+                        },
+                        {
+                            "0": 4,
+                            "1": "Amit Patel",
+                            "2": "Male",
+                            "3": "Sales",
+                            "4": 85000,
+                            "5": null,
+                            "6": "2017-01-10",
+                            "7": "Bangalore",
+                            "8": "Karnataka",
+                            "9": "amit.patel@company.com",
+                            "10": "Active",
+                            "11": "85000"
+                        },
+                        {
+                            "0": 13,
+                            "1": "Vikas Singh",
+                            "2": "Male",
+                            "3": "Sales",
+                            "4": 45000,
+                            "5": 4,
+                            "6": "2021-11-05",
+                            "7": "Bangalore",
+                            "8": "Karnataka",
+                            "9": "vikas@gmail.com",
+                            "10": "Active",
+                            "11": "130000"
+                        },
+                        {
+                            "0": 20,
+                            "1": "Rahul Kapoor",
+                            "2": "Male",
+                            "3": "Sales",
+                            "4": 47000,
+                            "5": 4,
+                            "6": "2023-01-08",
+                            "7": "Delhi",
+                            "8": "Delhi",
+                            "9": "rahul@gmail.com",
+                            "10": "Active",
+                            "11": "177000"
+                        },
+                        {
+                            "0": 26,
+                            "1": "Yash Thakur",
+                            "2": "Male",
+                            "3": "Sales",
+                            "4": 50000,
+                            "5": 4,
+                            "6": "2022-01-20",
+                            "7": "Mumbai",
+                            "8": "Maharashtra",
+                            "9": "yash@gmail.com",
+                            "10": "Active",
+                            "11": "227000"
+                        },
+                        {
+                            "0": 31,
+                            "1": "Neha Iyer",
+                            "2": "Female",
+                            "3": "Sales",
+                            "4": 49000,
+                            "5": 4,
+                            "6": "2023-03-18",
+                            "7": "Chennai",
+                            "8": "Tamil Nadu",
+                            "9": "nehaiyer@gmail.com",
+                            "10": "Active",
+                            "11": "276000"
+                        },
+                        {
+                            "0": 37,
+                            "1": "Aisha Khan",
+                            "2": "Female",
+                            "3": "Sales",
+                            "4": 46000,
+                            "5": 4,
+                            "6": "2022-02-28",
+                            "7": "Hyderabad",
+                            "8": "Telangana",
+                            "9": "aisha@gmail.com",
+                            "10": "Inactive",
+                            "11": "322000"
+                        },
+                        {
+                            "0": 51,
+                            "1": "Vikas Singh",
+                            "2": "Male",
+                            "3": "Sales",
+                            "4": 45000,
+                            "5": 4,
+                            "6": "2021-11-05",
+                            "7": "Bangalore",
+                            "8": "Karnataka",
+                            "9": "vikas@gmail.com",
+                            "10": "Active",
+                            "11": "367000"
+                        },
+                        {
+                            "0": 6,
+                            "1": "Rohit Mehta",
+                            "2": "Male",
+                            "3": "Support",
+                            "4": 75000,
+                            "5": null,
+                            "6": "2018-07-22",
+                            "7": "Chennai",
+                            "8": "Tamil Nadu",
+                            "9": "rohit.mehta@company.com",
+                            "10": "Active",
+                            "11": "75000"
+                        },
+                        {
+                            "0": 18,
+                            "1": "Low Salary",
+                            "2": "Male",
+                            "3": "Support",
+                            "4": 25000,
+                            "5": 6,
+                            "6": "2023-01-01",
+                            "7": "Pune",
+                            "8": "Maharashtra",
+                            "9": "low@gmail.com",
+                            "10": "Active",
+                            "11": "100000"
+                        },
+                        {
+                            "0": 25,
+                            "1": "Ravi Kumar",
+                            "2": "Male",
+                            "3": "Support",
+                            "4": 30000,
+                            "5": 6,
+                            "6": "2022-05-15",
+                            "7": "Chennai",
+                            "8": "Tamil Nadu",
+                            "9": "ravi@gmail.com",
+                            "10": "Active",
+                            "11": "130000"
+                        },
+                        {
+                            "0": 34,
+                            "1": "Divya Pillai",
+                            "2": "Female",
+                            "3": "Support",
+                            "4": 32000,
+                            "5": 6,
+                            "6": "2021-09-10",
+                            "7": "Hyderabad",
+                            "8": "Telangana",
+                            "9": "divya@gmail.com",
+                            "10": "On Leave",
+                            "11": "162000"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "employee_id",
+                            "field": "0",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": true,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "employee_name",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "gender",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "department",
+                            "field": "3",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "salary",
+                            "field": "4",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "manager_id",
+                            "field": "5",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "hire_date",
+                            "field": "6",
+                            "dataType": {
+                                "type": 27,
+                                "needsQuotes": true
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "city",
+                            "field": "7",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "state",
+                            "field": "8",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "email",
+                            "field": "9",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "employment_status",
+                            "field": "10",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "running_total",
+                            "field": "11",
+                            "dataType": {
+                                "type": 10,
+                                "flags": [
+                                    "UNSIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 65,
+                                "numericScale": 30,
+                                "parameterFormatType": "TwoOrOneOrZero",
+                                "synonyms": [
+                                    "FIXED",
+                                    "NUMERIC",
+                                    "DEC"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 52 records retrieved in 0.715ms"
+                    },
+                    "totalRowCount": 52,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 23,
+                    "sql": "\n\n#Q15. Display a running total of salaries within each department\nSELECT *,\n    SUM(salary) OVER(PARTITION BY department ORDER BY employee_id) AS running_total\nFROM employees;",
+                    "updatable": true,
+                    "fullTableName": "employees"
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 1,
+                "end": 197,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 22
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 22,
+                            "length": 94
+                        },
+                        "contentStart": 36,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 116,
+                            "length": 112
+                        },
+                        "contentStart": 128,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 228,
+                            "length": 160
+                        },
+                        "contentStart": 240,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 388,
+                            "length": 146
+                        },
+                        "contentStart": 455,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 534,
+                            "length": 121
+                        },
+                        "contentStart": 584,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 655,
+                            "length": 134
+                        },
+                        "contentStart": 712,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 789,
+                            "length": 236
+                        },
+                        "contentStart": 850,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1025,
+                            "length": 140
+                        },
+                        "contentStart": 1078,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1165,
+                            "length": 177
+                        },
+                        "contentStart": 1167,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1342,
+                            "length": 64
+                        },
+                        "contentStart": 1344,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1406,
+                            "length": 129
+                        },
+                        "contentStart": 1408,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1535,
+                            "length": 176
+                        },
+                        "contentStart": 1612,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1711,
+                            "length": 234
+                        },
+                        "contentStart": 1771,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1945,
+                            "length": 149
+                        },
+                        "contentStart": 1947,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2094,
+                            "length": 211
+                        },
+                        "contentStart": 2156,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2305,
+                            "length": 153
+                        },
+                        "contentStart": 2308,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2458,
+                            "length": 198
+                        },
+                        "contentStart": 2516,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2656,
+                            "length": 245
+                        },
+                        "contentStart": 2742,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2901,
+                            "length": 100
+                        },
+                        "contentStart": 2903,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 3001,
+                            "length": 195
+                        },
+                        "contentStart": 3048,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 3196,
+                            "length": 271
+                        },
+                        "contentStart": 3274,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 3467,
+                            "length": 10
+                        },
+                        "contentStart": 3466,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": []
+        }
+    ]
+}
