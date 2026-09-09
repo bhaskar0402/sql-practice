@@ -1,0 +1,299 @@
+{
+    "type": "MySQLNotebook",
+    "version": "1.0",
+    "caption": "Untitled-1",
+    "content": "use employer_database;\n\n# Q1. Display employee name in uppercase along with the length of the employee name.\n\nSELECT\n    UPPER(employee_name) AS employee_name,\n    LENGTH(employee_name) AS employee_length\nFROM employees;\n\n# Q2. Display employee details in the format: Raj Sharma (raj.sharma@company.com) - Mumbai\nSELECT\n    CONCAT(employee_name, ' (', email, ') ', '- ', city) AS employee_name_format\nFROM employees;\n\n# Q3. Extract the username from employee email addresses.\nSELECT\n    SUBSTRING_INDEX(email, '@', 1) AS userName,\n    email\nFROM employees;\n\n#Q4. Find employees whose email domain is gmail.com.\n-- Approach 1: Pattern matching\nSELECT * FROM employees\nWHERE email LIKE '%gmail.com';\n\n-- Approach 2: Exact domain extraction\nSELECT * FROM employees\nWHERE SUBSTRING_INDEX(email, '@', -1) = 'gmail.com';\n\n#Q5. Display employee initials. e.g., Raj Sharma → RS, Priya Mehta → PM\nSELECT\n    CONCAT(\n        LEFT(TRIM(employee_name), 1),\n        LEFT(SUBSTRING_INDEX(TRIM(employee_name), ' ', -1), 1)\n    ) AS employee_initials\nFROM employees;\n\n\n\n\n",
+    "options": {
+        "tabSize": 4,
+        "indentSize": 4,
+        "insertSpaces": true,
+        "defaultEOL": "LF",
+        "trimAutoWhitespace": true
+    },
+    "viewState": null,
+    "contexts": [
+        {
+            "state": {
+                "start": 1,
+                "end": 41,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "20ecee9b-e7ee-48de-f3a3-581a0f0a6d6f"
+                    ]
+                },
+                "currentHeight": 300,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 22
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 22,
+                            "length": 198
+                        },
+                        "contentStart": 110,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 220,
+                            "length": 196
+                        },
+                        "contentStart": 313,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 416,
+                            "length": 140
+                        },
+                        "contentStart": 476,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 556,
+                            "length": 141
+                        },
+                        "contentStart": 643,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 697,
+                            "length": 117
+                        },
+                        "contentStart": 738,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 814,
+                            "length": 236
+                        },
+                        "contentStart": 888,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1050,
+                            "length": 5
+                        },
+                        "contentStart": 1049,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "0a504c88-60ff-49c4-a094-180a3656cd8f",
+                    "resultId": "20ecee9b-e7ee-48de-f3a3-581a0f0a6d6f",
+                    "rows": [
+                        {
+                            "0": "RS"
+                        },
+                        {
+                            "0": "AV"
+                        },
+                        {
+                            "0": "PS"
+                        },
+                        {
+                            "0": "AP"
+                        },
+                        {
+                            "0": "NJ"
+                        },
+                        {
+                            "0": "RM"
+                        },
+                        {
+                            "0": "SK"
+                        },
+                        {
+                            "0": "KS"
+                        },
+                        {
+                            "0": "AS"
+                        },
+                        {
+                            "0": "PM"
+                        },
+                        {
+                            "0": "RJ"
+                        },
+                        {
+                            "0": "SP"
+                        },
+                        {
+                            "0": "VS"
+                        },
+                        {
+                            "0": "AV"
+                        },
+                        {
+                            "0": "KS"
+                        },
+                        {
+                            "0": "MJ"
+                        },
+                        {
+                            "0": "PN"
+                        },
+                        {
+                            "0": "LS"
+                        },
+                        {
+                            "0": "AG"
+                        },
+                        {
+                            "0": "RK"
+                        },
+                        {
+                            "0": "SK"
+                        },
+                        {
+                            "0": "AM"
+                        },
+                        {
+                            "0": "DM"
+                        },
+                        {
+                            "0": "NR"
+                        },
+                        {
+                            "0": "RK"
+                        },
+                        {
+                            "0": "YT"
+                        },
+                        {
+                            "0": "RS"
+                        },
+                        {
+                            "0": "TD"
+                        },
+                        {
+                            "0": "MA"
+                        },
+                        {
+                            "0": "KS"
+                        },
+                        {
+                            "0": "NI"
+                        },
+                        {
+                            "0": "VS"
+                        },
+                        {
+                            "0": "HP"
+                        },
+                        {
+                            "0": "DP"
+                        },
+                        {
+                            "0": "IK"
+                        },
+                        {
+                            "0": "SJ"
+                        },
+                        {
+                            "0": "AK"
+                        },
+                        {
+                            "0": "SR"
+                        },
+                        {
+                            "0": "PD"
+                        },
+                        {
+                            "0": "RS"
+                        },
+                        {
+                            "0": "AY"
+                        },
+                        {
+                            "0": "NM"
+                        },
+                        {
+                            "0": "SA"
+                        },
+                        {
+                            "0": "SB"
+                        },
+                        {
+                            "0": "HS"
+                        },
+                        {
+                            "0": "TU"
+                        },
+                        {
+                            "0": "NE"
+                        },
+                        {
+                            "0": "AS"
+                        },
+                        {
+                            "0": "RJ"
+                        },
+                        {
+                            "0": "PM"
+                        },
+                        {
+                            "0": "VS"
+                        },
+                        {
+                            "0": "AV"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "employee_initials",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 52 records retrieved in 4.23ms"
+                    },
+                    "totalRowCount": 52,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 6,
+                    "sql": "\n\n#Q5. Display employee initials. e.g., Raj Sharma → RS, Priya Mehta → PM\nSELECT\n    CONCAT(\n        LEFT(TRIM(employee_name), 1),\n        LEFT(SUBSTRING_INDEX(TRIM(employee_name), ' ', -1), 1)\n    ) AS employee_initials\nFROM employees;",
+                    "updatable": false,
+                    "fullTableName": ""
+                }
+            ]
+        }
+    ]
+}
